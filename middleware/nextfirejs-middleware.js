@@ -7,7 +7,7 @@ const AUTH_PATHS = [
     "/forgot-password"
 ]
 
-export default async function NextFireMiddleware({ req, middleware = undefined, nextFireMiddlewareOptions = {} }) {
+export default async function NextFireJSMiddleware({ req, middleware = undefined, nextFireJSMiddlewareOptions = {} }) {
     const path = req.nextUrl.pathname;
     const loggedIn = await checkUser();
     middleware = middleware ?? ((req) => { return NextResponse.next() });
@@ -20,15 +20,15 @@ export default async function NextFireMiddleware({ req, middleware = undefined, 
     }
 
     // Requesting an auth page.
-    // These are special routes handled by NextFire auth.
+    // These are special routes handled by NextFireJS auth.
     if (AUTH_PATHS.includes(path)) {
-        return NextResponse.rewrite(new URL('/nextfire?path=' + path, req.nextUrl));
+        return NextResponse.rewrite(new URL('/nextfirejs?path=' + path, req.nextUrl));
     }
 
     // If a regex rule is defined in allowRule, allow the path if it matches
     // Every other form of rule specification is ignored.
-    if (nextFireMiddlewareOptions.allowRule != undefined) {
-        const rule = new RegExp(nextFireMiddlewareOptions.allowRule)
+    if (nextFireJSMiddlewareOptions.allowRule != undefined) {
+        const rule = new RegExp(nextFireJSMiddlewareOptions.allowRule)
         if (rule.test(path)) {
             return middleware(req)
         }
@@ -40,17 +40,17 @@ export default async function NextFireMiddleware({ req, middleware = undefined, 
         }
     }
 
-    if (nextFireMiddlewareOptions.gateMode == "allowByDefault") {
+    if (nextFireJSMiddlewareOptions.gateMode == "allowByDefault") {
         // Routes will be allowed by default
         // Routes in privatePaths will be denied for unauthenticated users
-        if (nextFireMiddlewareOptions.privatePaths.includes(path) && !loggedIn) {
+        if (nextFireJSMiddlewareOptions.privatePaths.includes(path) && !loggedIn) {
             return NextResponse.redirect(new URL('/login?target=' + path, req.nextUrl));
         }
         return middleware(req)
     }
     // Routes will be denied by default
     // Routes in publicPaths will be allowed for unauthenticated users
-    if (nextFireMiddlewareOptions.publicPaths.includes(path) || loggedIn) {
+    if (nextFireJSMiddlewareOptions.publicPaths.includes(path) || loggedIn) {
         return middleware(req)
     }
     return NextResponse.redirect(new URL('/login?target=' + path, req.nextUrl));

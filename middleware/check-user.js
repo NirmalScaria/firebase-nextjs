@@ -5,7 +5,7 @@ import { firebaseConfig } from "@/firebase-app-config";
 const google_cert_url = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com";
 export default async function checkUser() {
     const cookieStore = cookies();
-    const token = cookieStore.get("nextfire_token")?.value;
+    const token = cookieStore.get("nextfirejs_token")?.value;
     if (!token) {
         return false;
     }

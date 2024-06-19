@@ -9,7 +9,7 @@ export function getUserCS() {
   return useContext(NextFireContext);
 }
 
-export function NextFireProvider({ children }) {
+export function NextFireJSProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [isEmailUser, setIsEmailUser] = useState(false);
@@ -31,7 +31,7 @@ export function NextFireProvider({ children }) {
       setIsEmailUser(isEmail);
 
       user.getIdToken(true).then(function (idToken) {
-        document.cookie = `nextfire_token=${idToken}`;
+        document.cookie = `nextfirejs_token=${idToken}`;
         // wait for 1 second
       }).catch(function (error) {
         console.error("FAILED TO GET ID TOKEN")
@@ -41,7 +41,7 @@ export function NextFireProvider({ children }) {
     } else {
       setCurrentUser(null);
       setUserLoggedIn(false);
-      document.cookie = "nextfire_token=";
+      document.cookie = "nextfirejs_token=";
     }
 
     setLoading(false);
@@ -55,8 +55,8 @@ export function NextFireProvider({ children }) {
   };
 
   return (
-    <NextFireContext.Provider value={value}>
+    <NextFireJSContext.Provider value={value}>
       {loading ? <body /> : children}
-    </NextFireContext.Provider>
+    </NextFireJSContext.Provider>
   );
 }

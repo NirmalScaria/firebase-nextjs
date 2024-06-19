@@ -1,10 +1,10 @@
-# NextFire
+# NextFireJS
 
 # Setup Instructions
 
 1. Install the packat
 ```bash
-npm install nextfire
+npm install nextfirejs
 ```
 
 2. Generate a firebase service account key and download it as a json file.
@@ -16,14 +16,14 @@ Store it in the root of your project as "firebase-app-config.json"
 4. Create a file called "middleware.js" in the root of your project and add the following code:
 
 ```javascript
-import NextFireMiddleware from "@/nextfire/middleware/nextfire-middleware";
+import NextFireJSMiddleware from "@/nextfirejs/middleware/nextfirejs-middleware";
 
-const nextFireMiddlewareOptions = {
+const nextFireJSMiddlewareOptions = {
     allowRule: "^\/_next\/.*"
 }
 
 export default function middleware(req) {
-    return NextFireMiddleware({ req, nextFireMiddlewareOptions });
+    return NextFireJSMiddleware({ req, nextFireJSMiddlewareOptions });
 }
 ```
 

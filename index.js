@@ -1,1 +1,1 @@
-console.log("Hello nextfire")
+console.log("Hello nextfireJS")

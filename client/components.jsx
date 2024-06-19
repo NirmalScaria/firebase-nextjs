@@ -1,8 +1,8 @@
 "use client";
 import "./componentStyles.css";
-import { doSignOut } from "@/nextfire/auth-actions"
+import { doSignOut } from "@/nextfirejs/auth-actions"
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../nextfire-firebase";
+import { auth } from "../nextfirejs-firebase";
 import { getUserCS } from "./auth";
 import { decodeFirebaseError } from "./getFirebaseErrors";
 export function LogoutButton({ children }) {
