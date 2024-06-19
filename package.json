@@ -1,0 +1,39 @@
+{
+  "name": "nextfire",
+  "version": "1.0.0",
+  "description": "Connect Next.js with Firebase Authentication.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "next build",
+    "start": "next start",
+    "dev": "next dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NirmalScaria/nextfire.git"
+  },
+  "keywords": [
+    "nextjs",
+    "firebase",
+    "authentication",
+    "integration",
+    "nextfire"
+  ],
+  "author": "Nirmal Scaria <scaria@scaria.dev>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NirmalScaria/nextfire/issues"
+  },
+  "homepage": "https://github.com/NirmalScaria/nextfire#readme",
+  "dependencies": {
+    "firebase": "^9.0.0",
+    "next": "^12.0.0",
+    "react": "^17.0.2"
+  },
+  "peerDependencies": {
+    "next": "^12.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
