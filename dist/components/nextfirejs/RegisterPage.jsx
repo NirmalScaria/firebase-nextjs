@@ -1,6 +1,6 @@
 "use client";
-import { getUserCS } from "@/nextfirejs/client/auth"
-import { GoogleSignInButton, EmailSignUpButton } from "@/nextfirejs/client/components";
+import { getUserCS } from "nextfirejs/client/auth"
+import { GoogleSignInButton, EmailSignUpButton } from "nextfirejs/client/components";
 import Link from "next/link";
 import { useState } from "react";
 

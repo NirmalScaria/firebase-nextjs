@@ -64,8 +64,6 @@ export function ProfileButton({ size = 30 }) {
         const profileButton = document.getElementById("profileButton");
         profileButton.style.backgroundColor = profileButton.style.backgroundColor === "rgba(0, 0, 0, 0.1)" ? "transparent" : "rgba(0, 0, 0, 0.1)";
         window.onclick = function (event) {
-            console.log("Checking")
-            console.log(event.target)
             if (event.target !== popup && event.target !== profileButton && event.target !== profileImage) {
                 popup.style.display = "none";
                 popup.style.opacity = "0";

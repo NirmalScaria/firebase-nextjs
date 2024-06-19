@@ -1,2 +1,2 @@
-import AuthPages from "@/nextfirejs/client/AuthPages";
+import AuthPages from "@/components/nextfirejs/AuthPages";
 export default AuthPages;
