@@ -7,17 +7,21 @@ const copyFiles = (source, target) => {
         const filePath = path.join(source, file);
         const targetPath = path.join(target, file);
         if (fs.lstatSync(filePath).isDirectory()) {
-        fs.mkdirSync(targetPath);
-        copyFiles(filePath, targetPath);
+            if (!fs.existsSync(targetPath)) fs.mkdirSync(targetPath);
+            copyFiles(filePath, targetPath);
         } else {
-        fs.copyFileSync(filePath, targetPath);
+            fs.copyFileSync(filePath, targetPath);
         }
     });
-    }
+}
 
 const cwd = process.cwd();
-const source = path.join(cwd, 'node_modules/nextfirejs/dist/components');
-const target = path.join(cwd, 'components');
+console.log("cwd is ", cwd);
+const source = path.join(cwd, 'dist/components');
+console.log("source is ", source);
+const target = path.join(cwd, '../../components');
+console.log("target is ", target);
+
 
 copyFiles(source, target);
 
