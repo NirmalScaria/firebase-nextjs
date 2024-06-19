@@ -1,13 +1,14 @@
 {
   "name": "nextfirejs",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Connect Next.js with Firebase Authentication.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "next build",
     "start": "next start",
-    "dev": "next dev"
+    "dev": "next dev",
+    "postinstall": "copy-files-from-to"
   },
   "repository": {
     "type": "git",
@@ -28,13 +29,26 @@
   "homepage": "https://github.com/NirmalScaria/nextfire#readme",
   "dependencies": {
     "firebase": "^9.0.0",
-    "next": "^12.0.0",
-    "react": "~17.0.2",
     "firebase-admin": "^10.0.0",
-    "jwt-decode": "~4.0.0"
+    "jwt-decode": "~4.0.0",
+    "next": "^12.0.0",
+    "react": "^17.0.2"
   },
   "peerDependencies": {
     "next": "^12.0.0",
     "react": "^17.0.2"
+  },
+  "copyFiles":[
+    {
+      "from": "node_modules/nextfirejs/dist/components/*",
+      "to": "components/"
+    },
+    {
+      "from": "node_modules/nextfirejs/dist/nextfirejs/*",
+      "to": "app/nextfirejs/"
+    }
+  ],
+  "devDependencies": {
+    "copy-files-from-to": "^3.11.0"
   }
 }
