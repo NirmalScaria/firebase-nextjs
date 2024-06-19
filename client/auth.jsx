@@ -3,10 +3,10 @@ import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../nextfirejs-firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
-const NextFireContext = React.createContext();
+const NextFireJSContext = React.createContext();
 
 export function getUserCS() {
-  return useContext(NextFireContext);
+  return useContext(NextFireJSContext);
 }
 
 export function NextFireJSProvider({ children }) {
