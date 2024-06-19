@@ -57,7 +57,12 @@ else {
 
 // COPY THE MIDDLEWARE
 source = path.join(cwd, 'dist/middleware.js');
-target = path.join(cwd, '../../middleware.js');
+if (isUsingSrc) {
+    target = path.join(cwd, '../../src/middleware.js');
+}
+else {
+    target = path.join(cwd, '../../middleware.js');
+}
 if (fs.existsSync(target)) {
     target = path.join(cwd, '../../middleware-example.js');
 }
