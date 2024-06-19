@@ -45,7 +45,7 @@ appRouterPath = path.join(appRouterPath, 'app');
 if (fs.existsSync(appRouterPath)) {
     console.log("App router detected");
     const nextFireTarget = path.join(appRouterPath, 'nextfirejs');
-    const nextFireSource = isUsingSrc ? path.join(cwd, 'dist/nextfirejssrc') : path.join(cwd, 'dist/nextfirejs');
+    const nextFireSource = path.join(cwd, 'dist/nextfirejs');
     if (!fs.existsSync(nextFireTarget)) fs.mkdirSync(nextFireTarget);
     copyFiles(nextFireSource, nextFireTarget);
     console.log("Files copied to app router");
