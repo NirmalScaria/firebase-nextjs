@@ -1,6 +1,6 @@
 "use client";
 import "./componentStyles.css";
-import { doSignOut } from "@/nextfirejs/auth-actions"
+import { doSignOut } from "nextfirejs/auth-actions"
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../nextfirejs-firebase";
 import { getUserCS } from "./auth";

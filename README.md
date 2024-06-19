@@ -16,7 +16,7 @@ Store it in the root of your project as "firebase-app-config.json"
 4. Create a file called "middleware.js" in the root of your project and add the following code:
 
 ```javascript
-import NextFireJSMiddleware from "@/nextfirejs/middleware/nextfirejs-middleware";
+import NextFireJSMiddleware from "nextfirejs/middleware/nextfirejs-middleware";
 
 const nextFireJSMiddlewareOptions = {
     allowRule: "^\/_next\/.*"
