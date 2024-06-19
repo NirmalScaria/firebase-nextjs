@@ -1,5 +1,5 @@
 {
-  "name": "nextfire",
+  "name": "nextfirejs",
   "version": "1.0.0",
   "description": "Connect Next.js with Firebase Authentication.",
   "main": "index.js",
@@ -29,7 +29,8 @@
   "dependencies": {
     "firebase": "^9.0.0",
     "next": "^12.0.0",
-    "react": "^17.0.2"
+    "react": "^17.0.2",
+    "firebase-admin": "^10.0.0"
   },
   "peerDependencies": {
     "next": "^12.0.0",

@@ -1,0 +1,74 @@
+.profileButton {
+    padding: 5px;
+    border-radius: 999px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.profilePopup {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 350px;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #00000022;
+    z-index: 100;
+    margin: 18px;
+    margin-top: 5px;
+    padding: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+.profilePopupImage {
+    border-radius: 9999px;
+    height: 30px;
+    width: 30px;
+    margin: 5px;
+    margin-left: 13px;
+    margin-top: 8px;
+}
+
+.profileName {
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 8px;
+    margin-right: 13px;
+    margin-bottom: 0px;
+}
+
+.profileEmail {
+    font-size: 14px;
+    color: #00000088;
+    margin-left: 8px;
+    margin-right: 13px;
+}
+
+.profileLogout {
+    padding-left: 13px;
+    padding-right: 13px;
+    padding-top: 13px;
+    padding-bottom: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000000aa;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-items: center;
+    background-color: transparent;
+    transition: all 0.3s;
+}
+
+.profileLogout:hover {
+    color: #000000;
+    background-color: #00000009;
+}
