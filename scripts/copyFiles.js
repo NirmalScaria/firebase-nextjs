@@ -16,22 +16,34 @@ const copyFiles = (source, target) => {
 }
 
 const cwd = process.cwd();
-console.log("cwd is ", cwd);
 const source = path.join(cwd, 'dist/components/nextfirejs');
-const targetRoot = path.join(cwd, '../../');
+var target = path.join(cwd, '../../');
 
 // If @/src exists, copy to @/src/components
-const srcTarget = path.join(targetRoot, 'src');
-if (fs.existsSync(srcTarget)) targetRoot = srcTarget;
+const srcTarget = path.join(target, 'src');
+if (fs.existsSync(srcTarget)) target = srcTarget;
 
-const targetComponents = path.join(targetRoot, 'components');
-if(!fs.existsSync(targetComponents)) fs.mkdirSync(targetComponents);
+target = path.join(target, 'components');
+if (!fs.existsSync(target)) fs.mkdirSync(target);
 
-const target = path.join(targetComponents, 'nextfirejs');
-if(!fs.existsSync(target)) fs.mkdirSync(target);
-
-console.log("source is ", source);
-console.log("target is ", target);
+target = path.join(target, 'nextfirejs');
+if (!fs.existsSync(target)) fs.mkdirSync(target);
 
 copyFiles(source, target);
 
+var appRouterPath = path.join(cwd, '../../');
+if (fs.existsSync(path.join(appRouterPath, 'src'))) appRouterPath = path.join(appRouterPath, 'src');
+
+appRouterPath = path.join(appRouterPath, 'app');
+if (fs.existsSync(appRouterPath)) {
+    console.log("App router detected");
+    const nextFireTarget = path.join(appRouterPath, 'nextfirejs');
+    const nextFireSource = path.join(cwd, 'dist/nextfirejs');
+    if (!fs.existsSync(nextFireTarget)) fs.mkdirSync(nextFireTarget);
+    copyFiles(nextFireSource, nextFireTarget);
+    console.log("Files copied to app router");
+}
+else {
+    console.log("App router not detected");
+    console.log("Quitting")
+}
