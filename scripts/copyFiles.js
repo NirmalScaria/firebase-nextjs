@@ -17,11 +17,21 @@ const copyFiles = (source, target) => {
 
 const cwd = process.cwd();
 console.log("cwd is ", cwd);
-const source = path.join(cwd, 'dist/components');
-console.log("source is ", source);
-const target = path.join(cwd, '../../components');
-console.log("target is ", target);
+const source = path.join(cwd, 'dist/components/nextfirejs');
+const targetRoot = path.join(cwd, '../../');
 
+// If @/src exists, copy to @/src/components
+const srcTarget = path.join(targetRoot, 'src');
+if (fs.existsSync(srcTarget)) targetRoot = srcTarget;
+
+const targetComponents = path.join(targetRoot, 'components');
+if(!fs.existsSync(target)) fs.mkdirSync(target);
+
+const target = path.join(targetComponents, 'nextfirejs');
+if(!fs.existsSync(target)) fs.mkdirSync(target);
+
+console.log("source is ", source);
+console.log("target is ", target);
 
 copyFiles(source, target);
 
