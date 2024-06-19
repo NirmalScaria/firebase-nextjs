@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
-import { firebaseConfig } from "@/firebase-app-config";
+import { firebaseConfig } from "/firebase-app-config";
 
 const google_cert_url = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com";
 export default async function checkUser() {

@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../nextfire-firebase";
+import { auth } from "../nextfirejs-firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 const NextFireContext = React.createContext();

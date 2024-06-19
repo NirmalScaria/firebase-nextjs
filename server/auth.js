@@ -1,6 +1,6 @@
 "use server";
 import { cookies } from 'next/headers'
-import serverconfig from "../../firebase-service-account.json"
+import serverconfig from "/firebase-service-account.json"
 import * as admin from 'firebase-admin';
 import { getAuth } from "firebase-admin/auth";
 
