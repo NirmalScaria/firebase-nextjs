@@ -1,6 +1,6 @@
 # NextFireJS
 
-With NextFireJS, you can get NextJS and Firebase to fall in love and get married. The best part, it takes less than 3 minutes.
+Connect Firebase Auth with NextJS with full support for client and server side auth access. The best part, it takes less than 3 minutes.
 
 <img width="1376" alt="Screenshot 2024-06-20 at 3 18 05 AM" src="https://github.com/NirmalScaria/nextfirejs/assets/46727865/f5a34f60-ac60-46eb-9500-f9f2abcf1a44">
 
@@ -166,6 +166,37 @@ nextFireJSMiddlewareOptions parameter passed to NextFireJSMiddleware has the fol
 
 **NOTE: allowRules parameter takes presedence over the other parameters. Meaning, if it is specified, all other parameters will be ignored.**
 **NOTE: Make sure to allow _next/\* for almost all circumstances, as _next is mostly used for public purposes**
+
+# Accessing the auth state
+
+## Client side
+
+On client side, the auth state could be accessed from any page/component using the function getUserCS(); (Stands for "Get User (Client Side)")
+```javascript
+"use client";
+import { getUserCS } from "nextfirejs/client/auth";
+export default function ClientPage() {
+    const { currentUser } = getUserCS();
+    return <div>
+      {JSON.stringify(currentUser?.email}
+    </div>
+}
+```
+
+## Server side
+
+On server side, the auth state could be accessed from any server side page or any API or function call! Yes! Out of the box. Just use the function getUserSS();. (Stands for "Get User (Server Side)"
+
+```javascript
+"use server";
+import { getUserSS } from "nextfirejs/server/auth";
+export default async function ServerPage() {
+  const user = await getUserSS();
+  return <div>
+    {JSON.stringify(user?.email}
+  </div>
+}
+```
 
 
 
