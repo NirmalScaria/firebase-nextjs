@@ -27,6 +27,11 @@ export function EmailSignInButton({ children, email, password, setErrorMessage, 
         if (setLoading) setLoading(true);
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password)
+            if (userCredential) {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
             if (setLoading) setLoading(false)
         }
         catch (error) {
@@ -42,6 +47,11 @@ export function EmailSignUpButton({ children, email, password, setErrorMessage, 
         if (setLoading) setLoading(true);
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+            if (userCredential) {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
             if (setLoading) setLoading(false)
         }
         catch (error) {
