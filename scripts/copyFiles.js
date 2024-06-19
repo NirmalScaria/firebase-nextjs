@@ -15,8 +15,10 @@ const copyFiles = (source, target) => {
     });
 }
 
+// COPY THE COMPONENTS
+
 const cwd = process.cwd();
-const source = path.join(cwd, 'dist/components/nextfirejs');
+var source = path.join(cwd, 'dist/components/nextfirejs');
 var target = path.join(cwd, '../../');
 
 // If @/src exists, copy to @/src/components
@@ -47,3 +49,12 @@ else {
     console.log("App router not detected");
     console.log("Quitting")
 }
+
+// COPY THE MIDDLEWARE
+source = path.join(cwd, 'dist/middleware.js');
+target = path.join(cwd, '../../middleware.js');
+if(fs.existsSync(target)) {
+    target = path.join(cwd, '../../middleware-example.js');
+}
+
+fs.copyFileSync(source, target);
