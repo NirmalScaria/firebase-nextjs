@@ -25,7 +25,7 @@ const srcTarget = path.join(targetRoot, 'src');
 if (fs.existsSync(srcTarget)) targetRoot = srcTarget;
 
 const targetComponents = path.join(targetRoot, 'components');
-if(!fs.existsSync(target)) fs.mkdirSync(target);
+if(!fs.existsSync(targetComponents)) fs.mkdirSync(targetComponents);
 
 const target = path.join(targetComponents, 'nextfirejs');
 if(!fs.existsSync(target)) fs.mkdirSync(target);
