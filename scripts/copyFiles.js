@@ -15,6 +15,8 @@ const copyFiles = (source, target) => {
     });
 }
 
+var isUsingSrc = false;
+
 // COPY THE COMPONENTS
 
 const cwd = process.cwd();
@@ -23,7 +25,10 @@ var target = path.join(cwd, '../../');
 
 // If @/src exists, copy to @/src/components
 const srcTarget = path.join(target, 'src');
-if (fs.existsSync(srcTarget)) target = srcTarget;
+if (fs.existsSync(srcTarget)) {
+    target = srcTarget;
+    isUsingSrc = true;
+}
 
 target = path.join(target, 'components');
 if (!fs.existsSync(target)) fs.mkdirSync(target);
@@ -40,7 +45,7 @@ appRouterPath = path.join(appRouterPath, 'app');
 if (fs.existsSync(appRouterPath)) {
     console.log("App router detected");
     const nextFireTarget = path.join(appRouterPath, 'nextfirejs');
-    const nextFireSource = path.join(cwd, 'dist/nextfirejs');
+    const nextFireSource = isUsingSrc ? path.join(cwd, 'dist/nextfirejssrc') : path.join(cwd, 'dist/nextfirejs');
     if (!fs.existsSync(nextFireTarget)) fs.mkdirSync(nextFireTarget);
     copyFiles(nextFireSource, nextFireTarget);
     console.log("Files copied to app router");
@@ -53,7 +58,7 @@ else {
 // COPY THE MIDDLEWARE
 source = path.join(cwd, 'dist/middleware.js');
 target = path.join(cwd, '../../middleware.js');
-if(fs.existsSync(target)) {
+if (fs.existsSync(target)) {
     target = path.join(cwd, '../../middleware-example.js');
 }
 
