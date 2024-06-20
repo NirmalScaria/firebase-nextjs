@@ -35,7 +35,7 @@ async function installGCloud() {
         {
             type: 'confirm',
             name: 'installGcloud',
-            message: 'gcloud command not found. Would you like to install it?'
+            message: 'GCloud CLI not found. It is required for automatic setup. Install it now?'
         }
     ]);
 

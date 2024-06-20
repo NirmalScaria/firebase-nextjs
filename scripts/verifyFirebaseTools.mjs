@@ -36,7 +36,7 @@ async function installFirebaseTools() {
         {
             type: 'confirm',
             name: 'installFirebaseTools',
-            message: 'firebase command not found. Would you like to install it?'
+            message: 'Firebase CLI not found. It is required for automatic setup. Install it now?'
         }
     ]);
 
