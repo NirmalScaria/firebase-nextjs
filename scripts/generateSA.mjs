@@ -264,7 +264,7 @@ async function verifyGLogin() {
   await gCloudLogin(email);
 }
 
-async function main() {
+export async function generateSA() {
   try {
     const resp = await verifyGcloud()
     if (resp === false) {
@@ -299,5 +299,3 @@ async function main() {
     console.error(error);
   }
 }
-
-main();

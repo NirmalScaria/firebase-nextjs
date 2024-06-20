@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "dev": "next dev",
-    "postinstall": "node scripts/copyFiles.js"
+    "postinstall": "node scripts/postInstall.mjs"
   },
   "repository": {
     "type": "git",
