@@ -266,6 +266,7 @@ async function verifyGLogin() {
 
 export async function generateSA() {
   try {
+    console.log("Starting Service Account generation")
     const resp = await verifyGcloud()
     if (resp === false) {
       console.log("GCloud is required for automatic setup. Please install it and try again.")
