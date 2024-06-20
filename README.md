@@ -20,6 +20,52 @@ NextFireJS currently offers the following features
 npm install nextfirejs
 ```
 
+## 2. Run the setup script
+```bash
+npx nextfirejs setup
+```
+
+This will
+- Automatically install gcloud and firebase if not installed. (You will be prompted to install it.)
+- Keep folloing the default options for installation (You may choose NO when gcloud setup asks if you want to setup Python).
+- You will be prompted to login with firebase.
+- Another prompt to login with gcloud (Google Cloud SDK). (Make sure to use the same account.)
+- You will be asked to select the firebase project you wish to use
+- You will be asked to choose the service account you wish to use. ("firebase-admin-sdk" is recommended)
+- Choose an app you wish to use. (Must be a web app) (If an app doesn't exist, you can create it.)
+- This will generate the necessary authentication credentials, and store it to the project.
+
+## 3. Setup NextFireJS Provider
+
+In the root layout file, (layout.jsx), wrap the whole body in **\<NextFireJSProvider\>**
+
+```html
+import {NextFireJSProvider} from "nextfirejs/client/auth";
+
+
+<html lang="en">
+    <NextFireJSProvider>
+        <body className={inter.className}>{children}</body>
+    </NextFireJSProvider>
+</html>
+```
+
+## 4. Thats it! Run the project.
+
+```bash
+npm run dev
+```
+
+This will require you to sign in to continue. You can use Google Sign In or Email Password Sign In.
+
+
+# Manual Setup
+
+## 1. Install the package
+```bash
+npm install nextfirejs
+```
+
 ## 2. Firebase Service Account
 
 Generate a Firebase Serivce Account Private Key and download it as JSON. You can get it from https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk
