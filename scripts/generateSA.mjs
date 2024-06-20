@@ -273,7 +273,7 @@ export async function generateSA() {
     }
     await verifyFirebaseTools();
     await runFirebaseLogout();
-    const loginresp = await runFirebaseLogin();
+    await runFirebaseLogin();
 
     await verifyGLogin();
     // return;
@@ -295,6 +295,7 @@ export async function generateSA() {
     const keyStored = await storeKey(selectedMail, location);
 
     console.log("SELECTED: ", selectedMail)
+    return { selectedProject, selectedMail };
   } catch (error) {
     console.error(error);
   }
