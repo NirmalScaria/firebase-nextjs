@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { copyComponents } from "./a_copyComponents.mjs";
 import { setupGcloud } from "./a_setupGcloud.mjs";
 import { setupProject } from "./b_setupProject.mjs";
 import { generateServiceAccount } from "./c_generateServiceAccount.mjs";
@@ -7,8 +8,16 @@ import { setWebApp } from "./d_setWebApp.mjs";
 import { enableAuth } from "./e_enableAuth.mjs";
 
 async function setup() {
-    // Step 1 : Install gcloud and login to it.
     console.log("🤞🏻 Starting NextFireJS Setup. 🤞🏻")
+
+    // Step 0 : Copy the files
+    console.log("📦 Installing authentication components 📦")
+    await copyComponents();
+    console.log("👏 Components installed. 👏")
+
+    // Step 1 : Install gcloud and login to it.
+    
+    console.log("🤖 Setting up GCloud 🤖")
     await setupGcloud();
     console.log("👏 GCloud setup complete. 👏")
 
