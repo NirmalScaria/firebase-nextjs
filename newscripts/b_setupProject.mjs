@@ -4,6 +4,7 @@ import inquirer from 'inquirer';
 export async function setupProject() {
     const projects = await getProjects();
     const selectedProject = await selectProject(projects);
+    await setProject(selectedProject);
     return selectedProject
 }
 
@@ -50,4 +51,22 @@ async function selectProject(projects) {
     ]);
 
     return selectedProject.project;
+}
+
+async function setProject(projectId) {
+    return new Promise((resolve, reject) => {
+        const firebaseUse = spawn('gcloud', ['config', 'set', 'project', projectId], { stdio: 'inherit' });
+
+        firebaseUse.on('error', (error) => {
+            reject(`Error: ${error.message}`);
+        });
+
+        firebaseUse.on('close', (code) => {
+            if (code === 0) {
+                resolve('Firebase project set successfully!');
+            } else {
+                reject(`Firebase project set failed with code ${code}`);
+            }
+        });
+    });
 }
