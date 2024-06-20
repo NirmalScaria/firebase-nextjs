@@ -9,7 +9,7 @@ import fs from "fs";
 const WEB_APP_CREDS_LOCATION = path.join(process.cwd(), "firebase-app-config.js");
 
 export async function setWebApp(selectedProject) {
-    await setupGoogleAuth()
+    await setupGoogleAuth(google)
     const apps = (await firebase.projects.webApps.list({
         parent: `projects/${selectedProject}`
     })).data.apps;
@@ -17,8 +17,8 @@ export async function setWebApp(selectedProject) {
     await saveCreds(selectedProject, selectedApp);
 }
 
-async function setupGoogleAuth() {
-    const auth = new google.auth.GoogleAuth({
+export async function setupGoogleAuth(googleObject) {
+    const auth = new googleObject.auth.GoogleAuth({
         scopes: [
             'https://www.googleapis.com/auth/cloud-platform',
             'https://www.googleapis.com/auth/firebase',
@@ -26,7 +26,7 @@ async function setupGoogleAuth() {
         keyFilename: 'firebase-service-account.json'
     })
     const authClient = await auth.getClient();
-    google.options({ auth: authClient });
+    googleObject.options({ auth: authClient });
 }
 
 async function selectApp(apps) {

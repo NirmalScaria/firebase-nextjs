@@ -4,6 +4,7 @@ import { setupGcloud } from "./a_setupGcloud.mjs";
 import { setupProject } from "./b_setupProject.mjs";
 import { generateServiceAccount } from "./c_generateServiceAccount.mjs";
 import { setWebApp } from "./d_setWebApp.mjs";
+import { enableAuth } from "./e_enableAuth.mjs";
 
 async function setup() {
     // Step 1 : Install gcloud and login to it.
@@ -25,6 +26,9 @@ async function setup() {
     console.log("🤓 Checking registered apps in the firebase project 🤓")
     await setWebApp(selectedProject);
     console.log("👏 Firebase App setup complete. 👏")
+
+    console.log("🫃🏻 Almost there... Enabling authentication providers...")
+    await enableAuth(selectedProject)
 
 }
 
