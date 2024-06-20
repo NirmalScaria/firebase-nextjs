@@ -1,14 +1,13 @@
 {
   "name": "nextfirejs",
-  "version": "1.2.9",
+  "version": "1.3.1",
   "description": "Connect Next.js with Firebase Authentication.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "next build",
     "start": "next start",
-    "dev": "next dev",
-    "install": "node scripts/postInstall.mjs"
+    "dev": "next dev"
   },
   "repository": {
     "type": "git",

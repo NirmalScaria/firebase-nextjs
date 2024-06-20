@@ -45,7 +45,7 @@ export async function copyAllFiles() {
     if (fs.existsSync(appRouterPath)) {
         console.log("App router detected");
         const nextFireTarget = path.join(appRouterPath, 'nextfirejs');
-        const nextFireSource = path.join(cwd, 'dist/nextfirejs');
+        const nextFireSource = path.join(cwd, 'node_modules/nextfirejs/dist/nextfirejs');
         if (!fs.existsSync(nextFireTarget)) fs.mkdirSync(nextFireTarget);
         copyFiles(nextFireSource, nextFireTarget);
         console.log("Files copied to app router");
