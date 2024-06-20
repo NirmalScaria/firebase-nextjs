@@ -2,6 +2,7 @@ import { spawn } from 'child_process';
 import inquirer from 'inquirer';
 import path from 'path';
 import { verifyGcloud } from './verifyGcloud.mjs';
+import { verifyFirebaseTools } from './verifyFirebaseTools.mjs';
 
 function runFirebaseLogout() {
   return new Promise((resolve, reject) => {
@@ -267,11 +268,13 @@ async function main() {
   try {
     const resp = await verifyGcloud()
     if (resp === false) {
-      console.log("Gcloud is required for automatic setup. Please install it and try again.")
+      console.log("GCloud is required for automatic setup. Please install it and try again.")
       return;
     }
+    await verifyFirebaseTools();
     await runFirebaseLogout();
     const loginresp = await runFirebaseLogin();
+    
     await verifyGLogin();
     // return;
 

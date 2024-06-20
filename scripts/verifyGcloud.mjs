@@ -31,7 +31,6 @@ export async function verifyGcloud() {
 async function installGCloud() {
     if (installing) return;
     installing = true;
-    // prompt user to install gcloud
     const { installGcloud } = await inquirer.prompt([
         {
             type: 'confirm',
@@ -41,7 +40,6 @@ async function installGCloud() {
     ]);
 
     if (installGcloud) {
-        // run ./installGcloud.sh
         const installGcloud = spawn('sh', [path.join(path.join(process.cwd(), "scripts"), 'installGcloud.sh')], { stdio: 'inherit' });
         return new Promise((resolve, reject) => {
             installGcloud.on('error', (error) => {
