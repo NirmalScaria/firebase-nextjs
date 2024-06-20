@@ -21,9 +21,7 @@ function formatApps(appsList) {
 }
 
 async function getApps(selectedProject) {
-    console.log("Getting apps")
     const apps = await getAppsFB(selectedProject)
-    console.log("Apps are : ", apps)
     return apps
 }
 

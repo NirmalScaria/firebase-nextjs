@@ -16,7 +16,6 @@ google.options({ auth: authClient });
 export async function getProjectsFB() {
 
     const res = await firebase.projects.list();
-    console.log(res.data.results)
     return res.data.results;
 }
 
@@ -31,7 +30,6 @@ export async function getAppConfig(selectedProject, appId) {
     var res = await firebase.projects.webApps.getConfig({
         name: `projects/${selectedProject}/webApps/${appId}/config`
     })
-    console.log(res.data)
     return res.data
 }
 // getProjectsFB();
