@@ -1,6 +1,7 @@
 import { spawn } from 'child_process';
 import inquirer from 'inquirer';
 import path from 'path';
+import { verifyGcloud } from './verifyGcloud.mjs';
 
 function runFirebaseLogout() {
   return new Promise((resolve, reject) => {
@@ -56,7 +57,7 @@ function getProjects() {
       if (code === 0) {
         resolve(projects);
       } else {
-        reject(`Firebase projects failed with code ${code}`);
+        reject(`Firebase getProjects failed with code ${code}`);
       }
     });
   });
@@ -141,7 +142,7 @@ async function getSAmail() {
       if (code === 0) {
         resolve(output)
       } else {
-        reject(`Firebase projects failed with code ${code}`);
+        reject(`Getting Service Accounts failed with code ${code}`);
       }
     });
   });
@@ -210,13 +211,69 @@ async function storeKey(email, location) {
       }
     });
   });
+}
 
+async function getFirebaseEmail() {
+  // list account from firebase login:list
+  return new Promise((resolve, reject) => {
+    const firebaseLogin = spawn('firebase', ['login:list'], { stdio: 'pipe' });
+
+    let accounts = '';
+
+    firebaseLogin.stdout.on('data', (data) => {
+      accounts += data.toString();
+    });
+
+    firebaseLogin.on('error', (error) => {
+      reject(`Error: ${error.message}`);
+    });
+
+    firebaseLogin.on('close', (code) => {
+      if (code === 0) {
+        resolve(accounts);
+      } else {
+        reject(`Firebase login failed with code ${code}`);
+      }
+    });
+  })
+}
+
+async function gCloudLogin(email) {
+  return new Promise((resolve, reject) => {
+    const firebaseLogin = spawn('gcloud', ['auth', 'login', email], { stdio: 'pipe' });
+
+    firebaseLogin.on('error', (error) => {
+      reject(`Error: ${error.message}`);
+    });
+
+    firebaseLogin.on('close', (code) => {
+      if (code === 0) {
+        resolve('Gcloud login successful!');
+      } else {
+        reject(`Gcloud login failed with code ${code}`);
+      }
+    });
+  });
+}
+
+async function verifyGLogin() {
+  const firebaseEmails = await getFirebaseEmail();
+  var email = firebaseEmails.split(' ')[3].split(',')[0].trim();
+  console.log("EMAIL: ", email)
+  await gCloudLogin(email);
 }
 
 async function main() {
   try {
+    const resp = await verifyGcloud()
+    if (resp === false) {
+      console.log("Gcloud is required for automatic setup. Please install it and try again.")
+      return;
+    }
     await runFirebaseLogout();
-    await runFirebaseLogin();
+    const loginresp = await runFirebaseLogin();
+    await verifyGLogin();
+    // return;
 
 
     const projectsList = await getProjects();
