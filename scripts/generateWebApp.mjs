@@ -2,6 +2,7 @@ import { spawn } from 'child_process';
 import inquirer from 'inquirer';
 import path from 'path';
 import fs from 'fs';
+import { getAppsFB, getAppConfig } from './test.mjs';
 
 function formatApps(appsList) {
     var lines = appsList.split("\n");
@@ -20,27 +21,10 @@ function formatApps(appsList) {
 }
 
 async function getApps(selectedProject) {
-    return new Promise((resolve, reject) => {
-        const firebaseProjects = spawn('firebase', ['apps:list', "--project", selectedProject], { stdio: 'pipe' });
-
-        let projects = '';
-
-        firebaseProjects.stdout.on('data', (data) => {
-            projects += data.toString();
-        });
-
-        firebaseProjects.on('error', (error) => {
-            reject(`Error: ${error.message}`);
-        });
-
-        firebaseProjects.on('close', (code) => {
-            if (code === 0) {
-                resolve(projects);
-            } else {
-                reject(`Firebase getApps failed with code ${code}`);
-            }
-        });
-    });
+    console.log("Getting apps")
+    const apps = await getAppsFB(selectedProject)
+    console.log("Apps are : ", apps)
+    return apps
 }
 
 async function chooseApp(apps) {
@@ -75,44 +59,47 @@ async function chooseApp(apps) {
     return selectedApp.selectedApp;
 }
 
-async function getConfig(selectedApp) {
-    return new Promise((resolve, reject) => {
-        const firebaseProjects = spawn('firebase', ['apps:sdkconfig', "WEB", selectedApp], { stdio: 'pipe' });
+async function getConfig(selectedProject, selectedApp) {
+    const config = await getAppConfig(selectedProject, selectedApp);
+    return config
+    // return new Promise((resolve, reject) => {
+    //     const firebaseProjects = spawn('firebase', ['apps:sdkconfig', "WEB", selectedApp], { stdio: 'pipe' });
 
-        let output = '';
+    //     let output = '';
 
-        firebaseProjects.stdout.on('data', (data) => {
-            output += data.toString();
-        });
+    //     firebaseProjects.stdout.on('data', (data) => {
+    //         output += data.toString();
+    //     });
 
-        firebaseProjects.on('error', (error) => {
-            reject(`Error: ${error.message}`);
-        });
+    //     firebaseProjects.on('error', (error) => {
+    //         reject(`Error: ${error.message}`);
+    //     });
 
-        firebaseProjects.on('close', (code) => {
-            if (code === 0) {
-                resolve(output)
-            } else {
-                reject(`Firebase getConfig failed with code ${code}`);
-            }
-        });
-    });
+    //     firebaseProjects.on('close', (code) => {
+    //         if (code === 0) {
+    //             resolve(output)
+    //         } else {
+    //             reject(`Firebase getConfig failed with code ${code}`);
+    //         }
+    //     });
+    // });
 }
 
 async function formatConfig(config) {
     // replace "firebase.initializeApp({" with "export const firebaseConfig = {"
     // and add "};"
-    config = config.replace("firebase.initializeApp({", "export const firebaseConfig = {")
-    config = config.replace("});", "};")
+    // config = config.replace("firebase.initializeApp({", "export const firebaseConfig = {")
+    // config = config.replace("});", "};")
+    config = "export const firebaseConfig = " + JSON.stringify(config, null, 2) + ";"
     return config
 }
 
 export async function generateWebApp(selectedProject) {
 
-    const appsList = await getApps(selectedProject);
-    const apps = formatApps(appsList);
+    const apps = await getApps(selectedProject);
+    // const apps = formatApps(appsList);
     const selectedApp = await chooseApp(apps);
-    const appConfig = await getConfig(selectedApp)
+    const appConfig = await getConfig(selectedProject, selectedApp)
     const formattedConfig = await formatConfig(appConfig)
 
     // write the config to a "firebase-app-config.js"

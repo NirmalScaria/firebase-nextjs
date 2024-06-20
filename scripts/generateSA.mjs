@@ -3,65 +3,33 @@ import inquirer from 'inquirer';
 import path from 'path';
 import { verifyGcloud } from './verifyGcloud.mjs';
 import { verifyFirebaseTools } from './verifyFirebaseTools.mjs';
+import { getProjectsFB } from './test.mjs';
 
-function runFirebaseLogout() {
-  return new Promise((resolve, reject) => {
-    const firebaseLogout = spawn('firebase', ['logout'], { stdio: 'pipe' });
+async function getProjects() {
+  const projects = await getProjectsFB();
+  console.log("Projects got : ", projects)
+  return projects;
+  // return new Promise((resolve, reject) => {
+  //   const firebaseProjects = spawn('firebase', ['projects:list'], { stdio: 'pipe' });
 
-    firebaseLogout.on('error', (error) => {
-      reject(`Error: ${error.message}`);
-    });
+  //   let projects = '';
 
-    firebaseLogout.on('close', (code) => {
-      if (code === 0) {
-        resolve('Firebase logout successful!');
-      } else {
-        reject(`Firebase logout failed with code ${code}`);
-      }
-    });
-  });
-}
+  //   firebaseProjects.stdout.on('data', (data) => {
+  //     projects += data.toString();
+  //   });
 
-function runFirebaseLogin() {
-  return new Promise((resolve, reject) => {
-    const firebaseLogin = spawn('firebase', ['login'], { stdio: 'inherit' });
+  //   firebaseProjects.on('error', (error) => {
+  //     reject(`Error: ${error.message}`);
+  //   });
 
-    firebaseLogin.on('error', (error) => {
-      reject(`Error: ${error.message}`);
-    });
-
-    firebaseLogin.on('close', (code) => {
-      if (code === 0) {
-        resolve('Firebase login successful!');
-      } else {
-        reject(`Firebase login failed with code ${code}`);
-      }
-    });
-  });
-}
-
-function getProjects() {
-  return new Promise((resolve, reject) => {
-    const firebaseProjects = spawn('firebase', ['projects:list'], { stdio: 'pipe' });
-
-    let projects = '';
-
-    firebaseProjects.stdout.on('data', (data) => {
-      projects += data.toString();
-    });
-
-    firebaseProjects.on('error', (error) => {
-      reject(`Error: ${error.message}`);
-    });
-
-    firebaseProjects.on('close', (code) => {
-      if (code === 0) {
-        resolve(projects);
-      } else {
-        reject(`Firebase getProjects failed with code ${code}`);
-      }
-    });
-  });
+  //   firebaseProjects.on('close', (code) => {
+  //     if (code === 0) {
+  //       resolve(projects);
+  //     } else {
+  //       reject(`Firebase getProjects failed with code ${code}`);
+  //     }
+  //   });
+  // });
 }
 
 function formatProjects(projects) {
@@ -271,16 +239,16 @@ export async function generateSA() {
       console.log("GCloud is required for automatic setup. Please install it and try again.")
       return;
     }
-    await verifyFirebaseTools();
-    await runFirebaseLogout();
-    await runFirebaseLogin();
+    // await verifyFirebaseTools();
+    // await runFirebaseLogout();
+    // await runFirebaseLogin();
 
-    await verifyGLogin();
+    // await verifyGLogin();
     // return;
 
 
-    const projectsList = await getProjects();
-    const projects = formatProjects(projectsList);
+    const projects = await getProjects();
+    // const projects = formatProjects(projectsList);
     const selectedProject = await selectProject(projects);
     const projectResult = await setProject(selectedProject);
 
