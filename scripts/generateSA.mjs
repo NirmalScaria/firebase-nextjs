@@ -3,33 +3,12 @@ import inquirer from 'inquirer';
 import path from 'path';
 import { verifyGcloud } from './verifyGcloud.mjs';
 import { verifyFirebaseTools } from './verifyFirebaseTools.mjs';
-import { getProjectsFB } from './test.mjs';
+// import { getProjectsFB } from './test.mjs';
+import { getProjectsGC } from './gcloudUtils.mjs';
 
 async function getProjects() {
-  const projects = await getProjectsFB();
-  console.log("Projects got : ", projects)
+  const projects = await getProjectsGC();
   return projects;
-  // return new Promise((resolve, reject) => {
-  //   const firebaseProjects = spawn('firebase', ['projects:list'], { stdio: 'pipe' });
-
-  //   let projects = '';
-
-  //   firebaseProjects.stdout.on('data', (data) => {
-  //     projects += data.toString();
-  //   });
-
-  //   firebaseProjects.on('error', (error) => {
-  //     reject(`Error: ${error.message}`);
-  //   });
-
-  //   firebaseProjects.on('close', (code) => {
-  //     if (code === 0) {
-  //       resolve(projects);
-  //     } else {
-  //       reject(`Firebase getProjects failed with code ${code}`);
-  //     }
-  //   });
-  // });
 }
 
 function formatProjects(projects) {
@@ -207,9 +186,9 @@ async function getFirebaseEmail() {
   })
 }
 
-async function gCloudLogin(email) {
+async function gCloudLogin() {
   return new Promise((resolve, reject) => {
-    const firebaseLogin = spawn('gcloud', ['auth', 'login', email], { stdio: 'pipe' });
+    const firebaseLogin = spawn('gcloud', ['auth', 'login'], { stdio: 'pipe' });
 
     firebaseLogin.on('error', (error) => {
       reject(`Error: ${error.message}`);
@@ -226,10 +205,10 @@ async function gCloudLogin(email) {
 }
 
 async function verifyGLogin() {
-  const firebaseEmails = await getFirebaseEmail();
-  var email = firebaseEmails.split(' ')[3].split(',')[0].trim();
-  console.log("EMAIL: ", email)
-  await gCloudLogin(email);
+  // const firebaseEmails = await getFirebaseEmail();
+  // var email = firebaseEmails.split(' ')[3].split(',')[0].trim();
+  // console.log("EMAIL: ", email)
+  await gCloudLogin();
 }
 
 export async function generateSA() {
@@ -243,7 +222,7 @@ export async function generateSA() {
     // await runFirebaseLogout();
     // await runFirebaseLogin();
 
-    // await verifyGLogin();
+    await verifyGLogin();
     // return;
 
 

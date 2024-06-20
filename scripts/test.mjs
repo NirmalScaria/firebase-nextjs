@@ -11,8 +11,6 @@ const auth = new google.auth.GoogleAuth({
 const authClient = await auth.getClient();
 google.options({ auth: authClient });
 
-
-
 export async function getProjectsFB() {
 
     const res = await firebase.projects.list();
