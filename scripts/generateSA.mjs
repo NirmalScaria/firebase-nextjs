@@ -6,7 +6,7 @@ import { verifyFirebaseTools } from './verifyFirebaseTools.mjs';
 
 function runFirebaseLogout() {
   return new Promise((resolve, reject) => {
-    const firebaseLogout = spawn('firebase', ['logout'], { stdio: 'inherit' });
+    const firebaseLogout = spawn('firebase', ['logout'], { stdio: 'pipe' });
 
     firebaseLogout.on('error', (error) => {
       reject(`Error: ${error.message}`);
@@ -266,7 +266,6 @@ async function verifyGLogin() {
 
 export async function generateSA() {
   try {
-    console.log("Starting Service Account generation")
     const resp = await verifyGcloud()
     if (resp === false) {
       console.log("GCloud is required for automatic setup. Please install it and try again.")
@@ -275,7 +274,7 @@ export async function generateSA() {
     await verifyFirebaseTools();
     await runFirebaseLogout();
     const loginresp = await runFirebaseLogin();
-    
+
     await verifyGLogin();
     // return;
 

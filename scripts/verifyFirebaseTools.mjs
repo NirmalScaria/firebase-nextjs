@@ -6,7 +6,6 @@ var installing = false;
 
 export async function verifyFirebaseTools() {
     return new Promise((resolve, reject) => {
-        console.log("Trying")
         const firebase = spawn('firebase', ['--version'], { stdio: 'pipe' });
         let firebaseOutput = '';
         firebase.stdout.on('data', (data) => {
