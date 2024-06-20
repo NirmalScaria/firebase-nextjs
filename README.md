@@ -15,6 +15,8 @@ NextFireJS currently offers the following features
 
 # Setup Instructions
 
+The setup will automatically take care of configurations and credentials. If you would instead prefer to do it all manually, [Click here](#manual-installation).
+
 ## 1. Install the package
 ```bash
 npm install nextfirejs
@@ -57,84 +59,6 @@ npm run dev
 ```
 
 This will require you to sign in to continue. You can use Google Sign In or Email Password Sign In.
-
-
-# Manual Setup
-
-## 1. Install the package
-```bash
-npm install nextfirejs
-```
-
-## 2. Firebase Service Account
-
-Generate a Firebase Serivce Account Private Key and download it as JSON. You can get it from https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk
-
-Rename it to 
-```
-"firebase-service-account.json"
-```
-and store it to the root of your NextJS project. (Along with package.json)
-
-## 3. Enable authentication methods
-
-Go to Firebase Authentication (https://console.firebase.google.com/u/0/project/_/authentication) and enable it. Also enable the providers you would like to use. (Google sign in and Email Password sign in are recommended)
-
-## 4. Firebase Web App
-
-Register a Web App app from firebase console. Read more at https://firebase.google.com/docs/web/setup#register-app if you need guidance. 
-
-Once completed, you can scroll down to see a section of code which looks like this:
-```javascript
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "...",
-  authDomain: "...",
-  projectId: "...",
-  storageBucket: "...",
-  messagingSenderId: "...",
-  appId: "..."
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-```
-
-Copy the content and store it to root of your NextJS project as "firebase-app-config.js". (Along with package.json)
-
-## 5. IMPORTANT: Add export keyword
-
-In the above file added, insert an "export" keyword just before **const firebaseConfig = {...**
-```javascript
-export const firebaseConfig = {
-    apiKey: "...",
-    authDomain: "..."
-    ...
-}
-```
-
-## 6. Last step
-
-In the root layout file, (layout.jsx), wrap the whole body in **\<NextFireJSProvider\>**
-
-```html
-import {NextFireJSProvider} from "nextfirejs/client/auth";
-
-<html lang="en">
-    <NextFireJSProvider>
-        <body className={inter.className}>{children}</body>
-    </NextFireJSProvider>
-</html>
-```
-
-## Thats it!
-
-Now try running the code and you will have to authenticate before you can access the website.
 
 # Customisation
 
@@ -244,8 +168,81 @@ export default async function ServerPage() {
 }
 ```
 
+# Manual Installation 
 
+## 1. Install the package
+```bash
+npm install nextfirejs
+```
 
+## 2. Firebase Service Account
 
+Generate a Firebase Serivce Account Private Key and download it as JSON. You can get it from https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk
+
+Rename it to 
+```
+"firebase-service-account.json"
+```
+and store it to the root of your NextJS project. (Along with package.json)
+
+## 3. Enable authentication methods
+
+Go to Firebase Authentication (https://console.firebase.google.com/u/0/project/_/authentication) and enable it. Also enable the providers you would like to use. (Google sign in and Email Password sign in are recommended)
+
+## 4. Firebase Web App
+
+Register a Web App app from firebase console. Read more at https://firebase.google.com/docs/web/setup#register-app if you need guidance. 
+
+Once completed, you can scroll down to see a section of code which looks like this:
+```javascript
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "...",
+  authDomain: "...",
+  projectId: "...",
+  storageBucket: "...",
+  messagingSenderId: "...",
+  appId: "..."
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+```
+
+Copy the content and store it to root of your NextJS project as "firebase-app-config.js". (Along with package.json)
+
+## 5. IMPORTANT: Add export keyword
+
+In the above file added, insert an "export" keyword just before **const firebaseConfig = {...**
+```javascript
+export const firebaseConfig = {
+    apiKey: "...",
+    authDomain: "..."
+    ...
+}
+```
+
+## 6. Last step
+
+In the root layout file, (layout.jsx), wrap the whole body in **\<NextFireJSProvider\>**
+
+```html
+import {NextFireJSProvider} from "nextfirejs/client/auth";
+
+<html lang="en">
+    <NextFireJSProvider>
+        <body className={inter.className}>{children}</body>
+    </NextFireJSProvider>
+</html>
+```
+
+## Thats it!
+
+Now try running the code and you will have to authenticate before you can access the website.
 
     
