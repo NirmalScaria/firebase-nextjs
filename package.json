@@ -14,7 +14,7 @@
     "url": "git+https://github.com/NirmalScaria/nextfirejs.git"
   },
   "bin": {
-    "nextfirejs magic": "./scripts/postInstall.mjs"
+    "nextfirejs setup": "./scripts/setup.mjs"
   },
   "keywords": [
     "nextjs",
