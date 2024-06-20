@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { copyAllFiles } from "./copyFiles.mjs";
 import { generateSA } from "./generateSA.mjs";
 

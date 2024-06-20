@@ -289,7 +289,7 @@ export async function generateSA() {
     const mails = formatMails(mailsUnformatted);
     const selectedMail = await selectMail(mails);
 
-    const rootPath = path.join(process.cwd(), "../../");
+    const rootPath = path.join(process.cwd(), "");
 
     const location = path.join(rootPath, "firebase-service-account.json");
 

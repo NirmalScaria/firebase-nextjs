@@ -40,7 +40,7 @@ async function installGCloud() {
     ]);
 
     if (installGcloud) {
-        const installGcloud = spawn('sh', [path.join(path.join(process.cwd(), "scripts"), 'installGcloud.sh')], { stdio: 'inherit' });
+        const installGcloud = spawn('sh', [path.join(path.join(process.cwd(), "node_modules/nextfirejs/scripts"), 'installGcloud.sh')], { stdio: 'inherit' });
         return new Promise((resolve, reject) => {
             installGcloud.on('error', (error) => {
                 reject(`Error: ${error.message}`);

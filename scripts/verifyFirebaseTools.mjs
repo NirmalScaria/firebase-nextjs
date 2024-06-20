@@ -41,7 +41,7 @@ async function installFirebaseTools() {
     ]);
 
     if (installFirebaseTools) {
-        const installFirebaseTools = spawn('sh', [path.join(path.join(process.cwd(), "scripts"), 'installFirebaseTools.sh')], { stdio: 'inherit' });
+        const installFirebaseTools = spawn('sh', [path.join(path.join(process.cwd(), "node_modules/nextfirejs/scripts"), 'installFirebaseTools.sh')], { stdio: 'inherit' });
         return new Promise((resolve, reject) => {
             installFirebaseTools.on('error', (error) => {
                 reject(`Error: ${error.message}`);

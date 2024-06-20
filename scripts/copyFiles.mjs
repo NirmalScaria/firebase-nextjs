@@ -20,8 +20,8 @@ export async function copyAllFiles() {
     // COPY THE COMPONENTS
 
     const cwd = process.cwd();
-    var source = path.join(cwd, 'dist/components/nextfirejs');
-    var target = path.join(cwd, '../../');
+    var source = path.join(cwd, 'node_modules/nextfirejs/dist/components/nextfirejs');
+    var target = path.join(cwd, '');
 
     // If @/src exists, copy to @/src/components
     const srcTarget = path.join(target, 'src');
@@ -38,7 +38,7 @@ export async function copyAllFiles() {
 
     copyFiles(source, target);
 
-    var appRouterPath = path.join(cwd, '../../');
+    var appRouterPath = path.join(cwd, '');
     if (fs.existsSync(path.join(appRouterPath, 'src'))) appRouterPath = path.join(appRouterPath, 'src');
 
     appRouterPath = path.join(appRouterPath, 'app');
@@ -56,15 +56,15 @@ export async function copyAllFiles() {
     }
 
     // COPY THE MIDDLEWARE
-    source = path.join(cwd, 'dist/middleware.js');
+    source = path.join(cwd, 'node_modules/nextfirejs/dist/middleware.js');
     if (isUsingSrc) {
-        target = path.join(cwd, '../../src/middleware.js');
+        target = path.join(cwd, 'src/middleware.js');
     }
     else {
-        target = path.join(cwd, '../../middleware.js');
+        target = path.join(cwd, 'middleware.js');
     }
     if (fs.existsSync(target)) {
-        target = path.join(cwd, '../../middleware-example.js');
+        target = path.join(cwd, 'middleware-example.js');
     }
 
     fs.copyFileSync(source, target);
