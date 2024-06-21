@@ -22,9 +22,9 @@ export function showStepsStatus(currentStep) {
         if (index < currentStep) {
             console.log(chalk.green("✓ " + step));
         } else if (index === currentStep) {
-            console.log(chalk.blueBright("⠋ "), step );
+            console.log(chalk.blueBright("⠋ "), step);
         } else {
-            console.log(chalk.gray(`• ${steps[index].description}` + step));
+            console.log(chalk.gray(`• ${step}`));
         }
     });
 };
