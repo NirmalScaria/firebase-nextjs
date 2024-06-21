@@ -88,7 +88,7 @@ async function createWebApp(apps, selectedProject) {
         const newApps = (await firebase.projects.webApps.list({
             parent: `projects/${selectedProject}`
         })).data.apps;
-        if (newApps.length > oldAppCount) {
+        if (newApps != undefined && (newApps.length > oldAppCount)) {
             console.log("👶🏻 App created 👶🏻")
             return "created"
         }
