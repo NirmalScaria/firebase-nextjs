@@ -10,10 +10,10 @@ const WEB_APP_CREDS_LOCATION = path.join(process.cwd(), "firebase-app-config.js"
 
 export async function setWebApp(selectedProject) {
     await setupGoogleAuth(google)
-    const apps = (await firebase.projects.webApps.list({
+    var apps = (await firebase.projects.webApps.list({
         parent: `projects/${selectedProject}`
     })).data.apps;
-    const selectedApp = await selectApp(apps);
+    const selectedApp = await selectApp(apps, selectedProject);
     await saveCreds(selectedProject, selectedApp);
 }
 
@@ -29,7 +29,7 @@ export async function setupGoogleAuth(googleObject) {
     googleObject.options({ auth: authClient });
 }
 
-async function selectApp(apps) {
+async function selectApp(apps, selectedProject) {
     var appChoices = [];
     if (apps == undefined || apps.length === 0) {
         console.log("No web apps found in the project! Please create an app.");
@@ -54,11 +54,47 @@ async function selectApp(apps) {
     ]);
 
     if (selectedApp.selectedApp === "createnewappnow") {
-        console.log("Creating a new app");
-        throw new Error("Not implemented yet");
+        if (await createWebApp(apps, selectedProject) == "created") {
+            apps = (await firebase.projects.webApps.list({
+                parent: `projects/${selectedProject}`
+            })).data.apps;
+            return selectApp(apps, selectedProject);
+        }
     }
-
     return selectedApp.selectedApp;
+}
+
+// NOTE: Create function call will not return the appId. It instead returns a workflow.
+// Instead of checking the workflow, the idea is to keep checking for apps list until the new app is created.
+async function createWebApp(apps, selectedProject) {
+    const oldAppCount = apps ? apps.length : 0;
+    const newApp = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'displayName',
+            message: 'Enter the display name for the new app : ',
+            default: "My NextFireJS App"
+        },
+    ])
+    const resp = await firebase.projects.webApps.create({
+        parent: `projects/${selectedProject}`,
+        requestBody: {
+            displayName: newApp.displayName,
+            appUrls: [],
+        }
+    })
+    console.log("🧑‍🍳 Creating app 🧑‍🍳")
+    for (let i = 0; i < 15; i++) {
+        const newApps = (await firebase.projects.webApps.list({
+            parent: `projects/${selectedProject}`
+        })).data.apps;
+        if (newApps.length > oldAppCount) {
+            console.log("👶🏻 App created 👶🏻")
+            return "created"
+        }
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+    }
+    throw Error("App creation failed. Please try again.")
 }
 
 async function saveCreds(selectedProject, selectedApp) {
