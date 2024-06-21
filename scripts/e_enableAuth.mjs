@@ -8,7 +8,6 @@ const identitytoolkit = google.identitytoolkit('v2');
 export async function enableAuth(selectedProject) {
     await setupGoogleAuth(google)
     await enableEmailPassword(selectedProject);
-    await enableGoogleAuth(selectedProject)
 }
 
 async function enableEmailPassword(selectedProject) {
@@ -26,10 +25,4 @@ async function enableEmailPassword(selectedProject) {
     })
 }
 
-async function enableGoogleAuth(selectedProject) {
-    const url = "https://console.firebase.google.com/u/0/project/" + selectedProject + "/authentication/providers";
-    console.log("Please enable Google authentication in the Firebase console: " + url);
-    console.log("That will be the end :)")
-    console.log("BYE")
-}
 

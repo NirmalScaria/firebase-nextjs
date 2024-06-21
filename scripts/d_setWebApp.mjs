@@ -30,17 +30,19 @@ export async function setupGoogleAuth(googleObject) {
 }
 
 async function selectApp(apps) {
-    const appChoices = apps.map((app) => {
-        return {
-            name: app.displayName + '(' + app.appId + ')',
-            value: app.appId,
-        }
-    });
-    appChoices.push({ name: "Create a New Web App", value: "createnewappnow" });
-
-    if (apps.length === 0) {
+    var appChoices = [];
+    if (apps == undefined || apps.length === 0) {
         console.log("No web apps found in the project! Please create an app.");
     }
+    else {
+        appChoices = apps.map((app) => {
+            return {
+                name: app.displayName + '(' + app.appId + ')',
+                value: app.appId,
+            }
+        });
+    }
+    appChoices.push({ name: "Create a New Web App", value: "createnewappnow" });
 
     const selectedApp = await inquirer.prompt([
         {
@@ -53,7 +55,7 @@ async function selectApp(apps) {
 
     if (selectedApp.selectedApp === "createnewappnow") {
         console.log("Creating a new app");
-        // call createApp function
+        throw new Error("Not implemented yet");
     }
 
     return selectedApp.selectedApp;
