@@ -1,8 +1,9 @@
 {
   "name": "nextfirejs",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Connect Next.js with Firebase Authentication.",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "next build",
