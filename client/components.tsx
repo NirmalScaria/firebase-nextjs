@@ -10,7 +10,7 @@ export function LogoutButton({ children }: {children: React.ReactNode}) {
     return <div onClick={doSignOut}>{children}</div>
 }
 
-export function GoogleSignInButton({ children, className }: { children: React.ReactNode, className: string }) {
+export function GoogleSignInButton({ children, className }: { children: React.ReactNode, className?: string }) {
     const doSignInWithGoogle = async () => {
         const provider = new GoogleAuthProvider();
         const resp = await signInWithPopup(auth, provider);
@@ -27,10 +27,9 @@ export function EmailSignInButton({ children, email, password, setErrorMessage, 
     children: React.ReactNode,
     email: string,
     password: string,
-    setErrorMessage: (msg: string) => void,
-    className: string,
-    setLoading: (loading: boolean) => void
-
+    setErrorMessage: (msg: string) => any,
+    className?: string,
+    setLoading?: (loading: boolean) => any
 }) {
     async function doSignInWithEmailAndPassword() {
         if (setLoading) setLoading(true);
@@ -56,8 +55,8 @@ export function EmailSignUpButton({ children, email, password, setErrorMessage, 
     email: string,
     password: string,
     setErrorMessage: (msg: string) => void,
-    className: string,
-    setLoading: (loading: boolean) => void
+    className?: string,
+    setLoading?: (loading: boolean) => void
 
 }) {
     async function doCreateUserWithEmailAndPassword() {
