@@ -33,3 +33,23 @@ declare module 'nextfirejs/client/components' {
 
     export function ProfileButton(props: ProfileButtonProps): JSX.Element;
 }
+
+declare module 'nextfirejs/client/auth' {
+    import { User } from "firebase/auth";
+
+    type NextFireJSContextType = {
+        userLoggedIn: boolean;
+        isEmailUser: boolean;
+        currentUser: User | null;
+        setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
+    };
+
+    export function getUserCS(): NextFireJSContextType;
+
+    export interface NextFireJSProviderProps {
+        children: React.ReactNode;
+    }
+
+    export const NextFireJSProvider: React.FC<NextFireJSProviderProps>;
+
+}
