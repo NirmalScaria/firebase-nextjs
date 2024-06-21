@@ -50,8 +50,7 @@ export function NextFireJSProvider({ children }) {
   const value = {
     userLoggedIn,
     isEmailUser,
-    currentUser,
-    setCurrentUser
+    currentUser
   };
 
   return (

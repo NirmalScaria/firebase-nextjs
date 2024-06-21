@@ -41,7 +41,6 @@ declare module 'nextfirejs/client/auth' {
         userLoggedIn: boolean;
         isEmailUser: boolean;
         currentUser: User | null;
-        setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
     };
 
     export function getUserCS(): NextFireJSContextType;
