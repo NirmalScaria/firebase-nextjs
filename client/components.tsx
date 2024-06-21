@@ -4,7 +4,7 @@ import { doSignOut } from "nextfirejs/auth-actions"
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "nextfirejs/nextfirejs-firebase";
 import { getUserCS } from "nextfirejs/client/auth";
-import { decodeFirebaseError } from "nextfirejs/getFirebaseErrors";
+import { decodeFirebaseError } from "nextfirejs/client/getFirebaseErrors";
 import React from "react";
 export function LogoutButton({ children }: {children: React.ReactNode}) {
     return <div onClick={doSignOut}>{children}</div>
