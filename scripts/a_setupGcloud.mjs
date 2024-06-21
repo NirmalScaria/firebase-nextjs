@@ -68,6 +68,7 @@ async function installGCloud() {
 
 async function gCloudLogin() {
     return new Promise((resolve, reject) => {
+        console.log("🔐 Logging into GCloud. Please authenticate from browser when prompted. 🔐");
         const firebaseLogin = exec('gcloud auth login');
 
         firebaseLogin.on('error', (error) => {
