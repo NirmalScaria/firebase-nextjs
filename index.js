@@ -1,2 +1,1 @@
-"use strict";
-console.log("Hello nextfireJS");
+console.log("Hello nextfireJS")
