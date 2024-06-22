@@ -84,6 +84,8 @@ export function ProfileButton({ size = 30 }: { size: number }) {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const { currentUser } = getUserCS();
 
+    if (!currentUser) return null;
+
     return <Popover isOpen={isPopoverOpen} positions={["bottom", "left", "right", "top"]} onClickOutside={() => setIsPopoverOpen(false)} content={
         <ProfilePopup user={currentUser} />}>
         <div onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
