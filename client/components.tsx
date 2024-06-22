@@ -1,12 +1,14 @@
 "use client";
-import "./componentStyles.css";
+import "./ProfileButtonStyle.css";
 import { doSignOut } from "nextfirejs/auth-actions"
-import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, User } from "firebase/auth";
 import { auth } from "nextfirejs/nextfirejs-firebase";
 import { getUserCS } from "nextfirejs/client/auth";
 import { decodeFirebaseError } from "nextfirejs/client/getFirebaseErrors";
-import React from "react";
-export function LogoutButton({ children }: {children: React.ReactNode}) {
+import React, { useState } from "react";
+import { Popover } from "react-tiny-popover";
+
+export function LogoutButton({ children }: { children: React.ReactNode }) {
     return <div onClick={doSignOut}>{children}</div>
 }
 
@@ -23,7 +25,7 @@ export function GoogleSignInButton({ children, className }: { children: React.Re
     return <div onClick={doSignInWithGoogle} className={className}>{children}</div>
 }
 
-export function EmailSignInButton({ children, email, password, setErrorMessage, className, setLoading } : {
+export function EmailSignInButton({ children, email, password, setErrorMessage, className, setLoading }: {
     children: React.ReactNode,
     email: string,
     password: string,
@@ -78,45 +80,73 @@ export function EmailSignUpButton({ children, email, password, setErrorMessage, 
     return <div onClick={doCreateUserWithEmailAndPassword} className={className}>{children}</div>
 }
 
-export function ProfileButton({ size = 30 }) {
+export function ProfileButton({ size = 30 }: { size: number }) {
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const { currentUser } = getUserCS();
-    const imageUrl = currentUser?.photoURL ?? "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" + (currentUser?.displayName ?? currentUser?.email);
-    if (!currentUser) return null;
-    function openProfilePopup() {
-        const popup = document.getElementById("profilePopup")!;
-        const profileImage = document.getElementById("profileImage");
-        popup.style.display = popup.style.display === "flex" ? "none" : "flex";
-        popup.style.opacity = popup.style.opacity === "1" ? "0" : "1";
-        const profileButton = document.getElementById("profileButton")!;
-        profileButton.style.backgroundColor = profileButton.style.backgroundColor === "rgba(0, 0, 0, 0.1)" ? "transparent" : "rgba(0, 0, 0, 0.1)";
-        window.onclick = function (event) {
-            if (event.target !== popup && event.target !== profileButton && event.target !== profileImage) {
-                popup.style.display = "none";
-                popup.style.opacity = "0";
-                profileButton.style.backgroundColor = "transparent";
-            }
-        }
-    }
-    return <>
-        <div className="profilePopup" id="profilePopup">
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
-                <img src={imageUrl} alt="profile" height={size} width={size} className="profilePopupImage" />
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    {currentUser?.displayName && <div className="profileName">{currentUser?.displayName}</div>}
-                    <div className="profileEmail">{currentUser?.email}</div>
-                </div>
-            </div>
-            <hr />
-            <LogoutButton> <div className="profileLogout">
-                <LogoutLogo />
-                Log Out</div> </LogoutButton>
+
+    return <Popover isOpen={isPopoverOpen} positions={["bottom", "left", "right", "top"]} onClickOutside={() => setIsPopoverOpen(false)} content={
+        <ProfilePopup user={currentUser} />}>
+        <div onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
+            <ProfileButtonTrigger user={currentUser} size={size} />
         </div>
-        <div className="profileButton" onClick={openProfilePopup} id="profileButton">
-            <img src={imageUrl} alt="profile" height={size} width={size} className="rounded-full" id="profileImage" />
-        </div>
-    </>
+    </Popover>
 }
 
 function LogoutLogo({ height = 20, width = 20, ...props }) {
     return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height={height} width={width} id="logout"><g><path d="M7 6a1 1 0 0 0 0-2H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h2a1 1 0 0 0 0-2H6V6zm13.82 5.42-2.82-4a1 1 0 0 0-1.39-.24 1 1 0 0 0-.24 1.4L18.09 11H10a1 1 0 0 0 0 2h8l-1.8 2.4a1 1 0 0 0 .2 1.4 1 1 0 0 0 .6.2 1 1 0 0 0 .8-.4l3-4a1 1 0 0 0 .02-1.18z"></path></g></svg>
 }
+
+function ProfileButtonTrigger({ user, size }: { user: User | null, size: number }) {
+    const imageUrl = user?.photoURL ?? "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" + (user?.displayName ?? user?.email);
+    return (
+        <img src={imageUrl} alt="profile" height={size} width={size} className="rounded-full" id="profileImage" style={{ cursor: "pointer" }} />
+    );
+};
+
+function ProfilePopup({ user }: { user: User | null }) {
+
+    const imageUrl = user?.photoURL ?? "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" + (user?.displayName ?? user?.email);
+
+    const popupStyle: React.CSSProperties = {
+        width: "calc(-40px + min(100vw, 370px))",
+        backgroundColor: '#fff',
+        border: '1px solid #00000022',
+        borderRadius: 8,
+        color: "#000",
+        padding: 0,
+        paddingTop: 10,
+        margin: 10,
+    };
+
+    const profilePopupImageStyle: React.CSSProperties = {
+        borderRadius: 9999,
+        height: 30,
+        width: 30,
+        margin: 5,
+        marginLeft: 13,
+        marginTop: 8,
+    };
+
+    return <div style={popupStyle}>
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
+            <img src={imageUrl} alt="profile" height={30} width={30} style={profilePopupImageStyle} />
+            <div style={{ display: "flex", flexDirection: "column" }}>
+                {user?.displayName && <div style={{
+                    fontSize: 15,
+                    fontWeight: 500,
+                    marginLeft: 8,
+                    marginRight: 13,
+                    marginBottom: 0,
+                }}>{user?.displayName}</div>}
+                <div style={{ fontSize: 14, color: "#00000088", marginLeft: 8, marginRight: 13 }}>{user?.email}</div>
+            </div>
+        </div>
+        <hr />
+        <LogoutButton>
+            <div className="profileLogout">
+                <LogoutLogo />
+                Log Out
+            </div>
+        </LogoutButton>
+    </div>
+};

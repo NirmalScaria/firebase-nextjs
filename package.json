@@ -1,6 +1,6 @@
 {
   "name": "nextfirejs",
-  "version": "1.4.26",
+  "version": "1.4.32",
   "description": "Connect Next.js with Firebase Authentication.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -36,13 +36,14 @@
     "inquirer": "^9.2.23",
     "jwt-decode": "~4.0.0",
     "next": "^12.0.0",
-    "react": "^17.0.2"
+    "react": "*",
+    "react-tiny-popover": "^8.0.4"
   },
   "devDependencies": {
-    "@types/react": "^17.0.2"
+    "@types/react": "*"
   },
   "peerDependencies": {
     "next": "^12.0.0",
-    "react": "^17.0.2"
+    "react": "*"
   }
 }

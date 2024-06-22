@@ -1,0 +1,21 @@
+.profileLogout {
+    padding-left: 13px;
+    padding-right: 13px;
+    padding-top: 13px;
+    padding-bottom: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000000aa;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-items: center;
+    background-color: transparent;
+    transition: all 0.3s;
+}
+
+.profileLogout:hover {
+    color: #000000;
+    background-color: #00000009;
+}
