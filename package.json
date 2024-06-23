@@ -2,10 +2,12 @@
   "name": "nextfirejs",
   "version": "1.4.61",
   "description": "Connect Next.js with Firebase Authentication.",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf build",
     "copy-files": "copyfiles '**/*' build/",
+    "prepare-package": "node utilities/preparePackage.mjs",
     "build": "npm run clean && npm run copy-files && cd build && tsc"
   },
   "repository": {
