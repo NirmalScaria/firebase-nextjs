@@ -1,4 +1,4 @@
-export function decodeFirebaseError({ errorCode }) {
+export function decodeFirebaseError({ errorCode }: {errorCode: string}) {
     if (errorCode == "auth/invalid-email") return "Invalid Email Address"
     if (errorCode == "auth/user-disabled") return "User Account Disabled"
     if (errorCode == "auth/user-not-found") return "User Account Not Found"

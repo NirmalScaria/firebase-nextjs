@@ -1,10 +1,10 @@
 "use client";
 import "./ProfileButtonStyle.css";
-import { doSignOut } from "nextfirejs/auth-actions"
+import { doSignOut } from "../auth-actions";
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, User } from "firebase/auth";
-import { auth } from "nextfirejs/nextfirejs-firebase";
+import { auth } from "../nextfirejs-firebase";
 import { getUserCS } from "nextfirejs/client/auth";
-import { decodeFirebaseError } from "nextfirejs/client/getFirebaseErrors";
+import { decodeFirebaseError } from "./getFirebaseErrors";
 import React, { useState } from "react";
 import { Popover } from "react-tiny-popover";
 

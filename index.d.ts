@@ -50,5 +50,12 @@ declare module 'nextfirejs/client/auth' {
     }
 
     export const NextFireJSProvider: React.FC<NextFireJSProviderProps>;
+}
 
+declare module 'nextfirejs/nextfirejs-firebase' {
+    import { Auth } from "firebase/auth";
+    import { FirebaseApp } from "@firebase/app";
+
+    export const app: FirebaseApp;
+    export const auth: Auth;
 }
