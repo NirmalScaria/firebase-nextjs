@@ -183,6 +183,26 @@ export default async function ServerPage() {
 }
 ```
 
+# Production setup
+
+There are few steps to be taken care of before publishing to production
+## 1. Service Account Keys
+The service account keys are stored in the root of project as "firebase-service-account.json". However, this is highly sensitive and should not be pushed to version control.
+
+To configure the service account, follow these steps.
+
+1. Run "npx nextfirejs getenv" to get the environment variables. This will print the environment variable to terminal.
+2. Copy the environment variable and set it wherever you plan to deploy. Like vercel or ".env.local" for local testing.
+3. Delete the "firebase-service-account.json" or add "firebase-service-account.json" to .gitignore.
+4. NOTE: There is another file, "firebase-app-config.js" which looks like a set of credentials, but it is totally fine to be pushed and published. [Read more](https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public)
+
+## 2. Add domain to firebase.
+When you are pushing to production, you will be having a production url different from localhost or the firebase url. This production url should be added to authorized domains in firebase authentication.
+
+1. Go to firebase console.
+2. Go to authentication -> settings -> authorized domains
+3. Add the domain you plan to publish the website to.
+
 # Manual Installation 
 
 ## 1. Install the package
