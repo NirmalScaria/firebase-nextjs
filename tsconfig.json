@@ -3,7 +3,7 @@
     "target": "es5",
     "module": "commonjs",
     "strict": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true

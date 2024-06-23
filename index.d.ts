@@ -59,3 +59,18 @@ declare module 'nextfirejs/nextfirejs-firebase' {
     export const app: FirebaseApp;
     export const auth: Auth;
 }
+
+declare module 'nextfirejs/auth-actions' {
+    import { Auth } from 'firebase/auth';
+
+    export const auth: Auth;
+
+    export function doCreateUserWithEmailAndPassword(email: string, password: string): Promise<void>;
+    export function doSignInWithEmailAndPassword(email: string, password: string): Promise<void>;
+    export function doSignInWithGoogle(): Promise<void>;
+    export function doSignOut(): Promise<void>;
+    export function doPasswordReset(email: string): Promise<void>;
+    export function doPasswordChange(password: string): Promise<void>;
+    export function doSendEmailVerification(): Promise<void>;
+}
+
