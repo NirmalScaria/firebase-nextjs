@@ -1,21 +1,37 @@
+
 # NextFireJS
+![nextfirejs](https://github.com/NirmalScaria/nextfirejs/assets/46727865/d945886a-739b-4f7b-be93-294dd70c9854)
 
-Connect Firebase Auth with NextJS with full support for client and server side auth access. The best part, it takes less than 3 minutes.
+**Effortless Firebase integration for NextJS**
 
-<img width="1376" alt="Screenshot 2024-06-20 at 3 18 05 AM" src="https://github.com/NirmalScaria/nextfirejs/assets/46727865/f5a34f60-ac60-46eb-9500-f9f2abcf1a44">
+[Skip to Installation Instructions](#setup-instructions)
 
-
+# Features
 NextFireJS currently offers the following features
 
-* Pre-built components for Login and Sign Up
-* Most components are customizable (like shadcn-ui)
-* Out of the box routing for authentication
-* Server side and client side auth state sync
+## Pre-built customisable authentication pages
+![nextfirejs-customisable-ui](https://github.com/NirmalScaria/nextfirejs/assets/46727865/f62d99c4-9117-4e31-a8b1-e837184aaff4)
 
+## Setup in Under 5 minutes
+![nextfirejs-setup](https://github.com/NirmalScaria/nextfirejs/assets/46727865/926500ae-009e-4bbd-9401-0ca590313518)
+
+## Secure routing. Out of the box and customisable.
+![nextfirejs-secure-routing](https://github.com/NirmalScaria/nextfirejs/assets/46727865/f7414c19-6a87-4519-b8d7-7b492277539a)
+
+## Full support for Client Client & Server Side authentication
+![nextfirejs-client-server](https://github.com/NirmalScaria/nextfirejs/assets/46727865/fcf63b26-7d5e-4996-9303-ffff0ac4db50)
+
+## Pre-built UI components
+![nextfirejs-ui-components](https://github.com/NirmalScaria/nextfirejs/assets/46727865/b3126fd5-dfb4-47c4-b166-537df4812445)
+
+## Type safe and Open source
+![nextfirejs-type-safe](https://github.com/NirmalScaria/nextfirejs/assets/46727865/d0bf72db-4833-4071-bee1-8ff0065fd171)
 
 # Setup Instructions
 
 The setup will automatically take care of configurations and credentials. If you would instead prefer to do it all manually, [Click here](#manual-installation).
+
+Prerequisite: A firebase project.
 
 ## 1. Install the package
 ```bash
@@ -28,14 +44,13 @@ npx nextfirejs setup
 ```
 
 This will
-- Automatically install gcloud and firebase if not installed. (You will be prompted to install it.)
-- Keep folloing the default options for installation (You may choose NO when gcloud setup asks if you want to setup Python).
-- You will be prompted to login with firebase.
-- Another prompt to login with gcloud (Google Cloud SDK). (Make sure to use the same account.)
-- You will be asked to select the firebase project you wish to use
+- Automatically install gcloud if not installed. (You will be prompted to install it.)
+- You will be prompted to login to gcloud.
+- You will be asked to select the firebase project you wish to use.
 - You will be asked to choose the service account you wish to use. ("firebase-admin-sdk" is recommended)
-- Choose an app you wish to use. (Must be a web app) (If an app doesn't exist, you can create it.)
+- Choose an app you wish to use. (Must be a web app) (If an app doesn't exist, you can create it there.)
 - This will generate the necessary authentication credentials, and store it to the project.
+- With this, basic setup is complete. Email password authentication will work, and if you want Google authentication, you will be given a link to add Google as provider, which you can visit and click "Add Provider" -> Google -> Enable.
 
 ## 3. Setup NextFireJS Provider
 
@@ -64,7 +79,7 @@ This will require you to sign in to continue. You can use Google Sign In or Emai
 
 ## Changing the UI
 
-Every authentication page is editable and is placed under components/nextfirejs.jsx. You can edit any of them and make use of the client components to connect with authentication functionalities. (Written below)
+**Every authentication page is editable** and is **placed under components/nextfirejs/**. You can edit any of them and make use of the client components to connect with authentication functionalities. (Written below)
 
 ## Client components
 
@@ -227,7 +242,27 @@ export const firebaseConfig = {
 }
 ```
 
-## 6. Last step
+## 6. Add login pages
+Add the login pages to the appropriate locations. It should do the following:
+The route "/nextfirejs" should point lead to this:
+
+```javascript
+import ForgotPasswordPage from "./ForgotPasswordPage";
+import LoginPage from "./LoginPage";
+import RegisterPage from "./RegisterPage";
+export default async function AuthPages({ searchParams }) {
+    const path = searchParams.path;
+    return <main className="w-screen h-screen bg-white text-black">
+        {path == "/login" && <LoginPage />}
+        {path == "/register" && <RegisterPage />}
+        {path == "/forgot-password" && <ForgotPasswordPage />}
+    </main>
+}
+```
+Where the LoginPage, RegisterPage and ForgotPasswordpage should be created as components and places in the project manually.
+You can refer to the source code of this project for sample.
+
+## 7. Last step
 
 In the root layout file, (layout.jsx), wrap the whole body in **\<NextFireJSProvider\>**
 
