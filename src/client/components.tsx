@@ -3,7 +3,7 @@ import "./ProfileButtonStyle.css";
 import { doSignOut } from "../../auth-actions";
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, User } from "firebase/auth";
 import { auth } from "../../nextfirejs-firebase";
-import { getUserCS } from "nextfirejs/client/auth";
+import { getUserCS } from "./auth";
 import { decodeFirebaseError } from "./getFirebaseErrors";
 import React, { useState } from "react";
 import { Popover } from "react-tiny-popover";
