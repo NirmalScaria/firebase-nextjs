@@ -4,6 +4,8 @@
     "module": "commonjs",
     "strict": true,
     "jsx": "react",
+    "declaration": true,
+    "outDir": "./build",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
