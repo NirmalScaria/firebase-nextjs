@@ -1,7 +1,7 @@
 "use server";
 import { cookies } from 'next/headers'
 import * as admin from 'firebase-admin';
-import { getAuth } from "firebase-admin/auth";
+import { DecodedIdToken, getAuth } from "firebase-admin/auth";
 import fs from 'fs';
 
 async function getServiceAccountCreds() {
@@ -35,7 +35,7 @@ export async function getUserSS() {
         return null
     }
     try {
-        const user = await getAuth(app)
+        const user: DecodedIdToken = await getAuth(app)
             .verifyIdToken(token.value)
         return user;
     } catch (error) {

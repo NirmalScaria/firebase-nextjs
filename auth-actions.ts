@@ -20,6 +20,7 @@ export const doSignInWithEmailAndPassword = (email: string, password: string) =>
 export const doSignInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const result = await signInWithPopup(auth, provider);
+  return result;
 };
 
 export async function doSignOut() {
