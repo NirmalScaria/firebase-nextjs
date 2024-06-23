@@ -39,10 +39,12 @@ export async function copyComponents() {
 
     copyFiles(source, target);
 
-    var appRouterPath = path.join(cwd, '');
-    if (fs.existsSync(path.join(appRouterPath, 'src'))) appRouterPath = path.join(appRouterPath, 'src');
+    var routerPath = path.join(cwd, '');
+    if (fs.existsSync(path.join(routerPath, 'src'))) routerPath = path.join(routerPath, 'src');
 
-    appRouterPath = path.join(appRouterPath, 'app');
+    const appRouterPath = path.join(routerPath, 'app');
+    const pagesRouterPath = path.join(routerPath, 'pages');
+
     if (fs.existsSync(appRouterPath)) {
         console.log("App router detected");
         const nextFireTarget = path.join(appRouterPath, 'nextfirejs');
@@ -52,8 +54,12 @@ export async function copyComponents() {
         console.log("Files copied to app router");
     }
     else {
-        console.log("App router not detected");
-        console.log("Quitting")
+        console.log("Pages router detected");
+        const nextFireTarget = pagesRouterPath
+        const nextFireSource = path.join(cwd, 'node_modules/nextfirejs/dist/pages');
+        if (!fs.existsSync(nextFireTarget)) fs.mkdirSync(nextFireTarget);
+        copyFiles(nextFireSource, nextFireTarget);
+        console.log("Files copied to pages router");
     }
 
     // COPY THE MIDDLEWARE
