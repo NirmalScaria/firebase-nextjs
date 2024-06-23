@@ -1,6 +1,6 @@
 {
   "name": "nextfirejs",
-  "version": "1.4.61",
+  "version": "1.4.62",
   "description": "Connect Next.js with Firebase Authentication.",
   "private": true,
   "scripts": {
