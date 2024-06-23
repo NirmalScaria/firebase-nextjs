@@ -4,9 +4,9 @@
   "description": "Connect Next.js with Firebase Authentication.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rimraf build/",
-    "copy-files": "copyfiles -u 1 src/**/*.{html,css,json,js,map,jpg,png,gif,svg,woff,woff2,eot,ttf,otf} build/",
-    "build": "npm run clean && tsc && npm run copy-files"
+    "clean": "rimraf build",
+    "copy-files": "copyfiles '**/*' build/ -e 'node_modules/**/*' -e '**/*.ts' -e '**/*.tsx' -e 'tsconfig.json'",
+    "build": "npm run clean && npm run copy-files && tsc"
   },
   "repository": {
     "type": "git",
