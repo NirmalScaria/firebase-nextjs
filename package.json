@@ -1,6 +1,6 @@
 {
   "name": "nextfirejs",
-  "version": "1.4.40",
+  "version": "1.4.49",
   "description": "Connect Next.js with Firebase Authentication.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -12,9 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/NirmalScaria/nextfirejs.git"
   },
-  "bin": {
-    "setup": "./scripts/setup.mjs"
-  },
+  "bin": "./scripts/index.mjs",
   "keywords": [
     "nextjs",
     "firebase",
@@ -30,6 +28,7 @@
   "homepage": "https://github.com/NirmalScaria/nextfirejs#readme",
   "dependencies": {
     "chalk": "^5.3.0",
+    "commander": "^12.1.0",
     "firebase": "^9.0.0",
     "firebase-admin": "^10.0.0",
     "googleapis": "^140.0.0",

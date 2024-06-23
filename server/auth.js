@@ -1,15 +1,30 @@
 "use server";
 import { cookies } from 'next/headers'
-import serverconfig from "/firebase-service-account.json"
 import * as admin from 'firebase-admin';
 import { getAuth } from "firebase-admin/auth";
+import fs from 'fs';
 
+async function getServiceAccountCreds() {
+    if (process.env.NEXTFIREJS_SERVICE_ACCOUNT_CREDENTIALS) {
+        return JSON.parse(process.env.NEXTFIREJS_SERVICE_ACCOUNT_CREDENTIALS)
+    }
+    else {
+        try {
+            const serverConfigFile = fs.readFileSync('firebase-service-account.json', 'utf8')
+            return JSON.parse(serverConfigFile)
+        }
+        catch (error) {
+            console.error("Error while reading service account creds", error)
+            return null
+        }
+    }
+}
 
 export async function getUserSS() {
     var app;
     if (admin.apps.length === 0) {
         app = admin.initializeApp({
-            credential: admin.credential.cert(serverconfig)
+            credential: admin.credential.cert(await getServiceAccountCreds())
         });
     } else {
         app = admin.app()

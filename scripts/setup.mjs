@@ -7,8 +7,14 @@ import { generateServiceAccount } from "./c_generateServiceAccount.mjs";
 import { setWebApp } from "./d_setWebApp.mjs";
 import { enableAuth } from "./e_enableAuth.mjs";
 import { showStepsStatus } from "./cliUtils.mjs";
+import { Command } from "commander";
 
-async function setup() {
+export const setup = new Command("setup")
+    .description("Setup NextFireJS")
+    .action(setupAction);
+
+
+async function setupAction() {
     console.log("🤞🏻 Starting NextFireJS Setup. 🤞🏻")
 
     // Step 0 : Copy the files
@@ -50,4 +56,4 @@ async function setup() {
     console.log("🎉🎉🎉 Setup Complete 🎉🎉🎉")
 }
 
-setup();
+// setup();
