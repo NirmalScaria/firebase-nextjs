@@ -1,6 +1,6 @@
 
 # NextFireJS
-![nextfirejs](https://github.com/NirmalScaria/nextfirejs/assets/46727865/d945886a-739b-4f7b-be93-294dd70c9854)
+![nextfirejslogo](https://github.com/NirmalScaria/nextfirejs/assets/46727865/980b3a80-d5a0-48c3-918a-2c0915ec7fbb)
 
 **Effortless Firebase integration for NextJS**
 
