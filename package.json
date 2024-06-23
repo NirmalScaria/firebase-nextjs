@@ -1,12 +1,12 @@
 {
   "name": "nextfirejs",
-  "version": "1.4.59",
+  "version": "1.4.61",
   "description": "Connect Next.js with Firebase Authentication.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf build",
-    "copy-files": "copyfiles '**/*' build/ -e 'node_modules/**/*' -e '**/*.ts' -e '**/*.tsx' -e 'tsconfig.json'",
-    "build": "npm run clean && npm run copy-files && tsc"
+    "copy-files": "copyfiles '**/*' build/",
+    "build": "npm run clean && npm run copy-files && cd build && tsc"
   },
   "repository": {
     "type": "git",

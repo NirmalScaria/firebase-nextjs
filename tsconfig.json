@@ -5,7 +5,8 @@
     "strict": true,
     "jsx": "react",
     "declaration": true,
-    "outDir": "./build",
+    "declarationMap": true,
+    "outDir": ".",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
