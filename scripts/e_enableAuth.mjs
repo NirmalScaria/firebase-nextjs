@@ -2,7 +2,6 @@
 
 import { google } from "googleapis";
 import { setupGoogleAuth } from "./d_setWebApp.mjs";
-const firebase = google.firebase('v1beta1');
 const identitytoolkit = google.identitytoolkit('v2');
 
 export async function enableAuth(selectedProject) {

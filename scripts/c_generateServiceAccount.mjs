@@ -1,39 +1,29 @@
 // This is to generate a service account credential for firebase
 
-import { spawn } from 'child_process';
 import inquirer from 'inquirer';
 import path from 'path';
+import { google } from 'googleapis';
+import fs from 'fs';
 
 const SERVICE_ACCOUNT_CREDS_LOCATION = path.join(process.cwd(), "firebase-service-account.json");
 
-export async function generateServiceAccount() {
-    const serviceAccounts = await getServiceAccounts();
+export async function generateServiceAccount(selectedProject, auth) {
+    const serviceAccounts = await getServiceAccounts(selectedProject, auth);
     const selectedServiceAccount = await selectServiceAccount(serviceAccounts);
-    await storeKey(selectedServiceAccount);
+    await storeKey(selectedServiceAccount, selectedProject, auth);
 }
 
-async function getServiceAccounts() {
-    return new Promise((resolve, reject) => {
-        const firebaseProjects = spawn('gcloud', ['iam', 'service-accounts', 'list', '--format', 'json'], { stdio: 'pipe' });
-
-        let output = '';
-
-        firebaseProjects.stdout.on('data', (data) => {
-            output += data.toString();
-        });
-
-        firebaseProjects.on('error', (error) => {
-            reject(`Error: ${error.message}`);
-        });
-
-        firebaseProjects.on('close', (code) => {
-            if (code === 0) {
-                resolve(JSON.parse(output))
-            } else {
-                reject(`Getting Service Accounts failed with code ${code}`);
-            }
-        });
+async function getServiceAccounts(selectedProject, auth) {
+    const iam = google.iam({
+        version: 'v1',
+        auth
     });
+
+    const serviceAccounts = await iam.projects.serviceAccounts.list({
+        name: `projects/${selectedProject}`,
+    });
+
+    return serviceAccounts.data.accounts;
 }
 
 async function selectServiceAccount(serviceAccounts) {
@@ -56,20 +46,16 @@ async function selectServiceAccount(serviceAccounts) {
     return selectedServiceAccount.serviceAccount;
 }
 
-async function storeKey(serviceAccount) {
-    return new Promise((resolve, reject) => {
-        const firebaseProjects = spawn('gcloud', ['iam', 'service-accounts', 'keys', 'create', SERVICE_ACCOUNT_CREDS_LOCATION, '--iam-account', serviceAccount], { stdio: 'pipe' });
-
-        firebaseProjects.on('error', (error) => {
-            reject(`Error: ${error.message}`);
-        });
-
-        firebaseProjects.on('close', (code) => {
-            if (code === 0) {
-                resolve('Key stored successfully!')
-            } else {
-                reject(`Key store failed with code ${code}`);
-            }
-        });
+async function storeKey(serviceAccount, selectedProject, auth) {
+    const iam = google.iam({
+        version: 'v1',
+        auth
     });
+    const resp = await iam.projects.serviceAccounts.keys.create({
+        name: `projects/${selectedProject}/serviceAccounts/${serviceAccount}`,
+    });
+    const key = resp.data.privateKeyData;
+    const keyStr = Buffer.from(key, 'base64').toString('utf-8');
+    fs.writeFileSync(SERVICE_ACCOUNT_CREDS_LOCATION, keyStr);
+    return;
 }

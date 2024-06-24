@@ -13,14 +13,13 @@ export const setup = new Command("setup")
     .description("Setup NextFireJS")
     .action(setupAction);
 
-
 async function setupAction() {
     console.log("🤞🏻 Starting NextFireJS Setup. 🤞🏻")
 
     // Step 0 : Copy the files
     showStepsStatus(0)
     console.log("📦 Installing authentication components 📦")
-    // await copyComponents();
+    await copyComponents();
     console.log("👏 Components installed. 👏")
 
     // Step 1 : Install gcloud and login to it.
@@ -38,7 +37,7 @@ async function setupAction() {
     // Step 3 : Generate service account
     showStepsStatus(3)
     console.log("🤖 Setting up service account 🤖")
-    await generateServiceAccount();
+    await generateServiceAccount(selectedProject, auth);
     console.log("👏 Service Account setup complete. 👏")
 
     // Step 4 : Set up firebase app
@@ -56,4 +55,4 @@ async function setupAction() {
     console.log("🎉🎉🎉 Setup Complete 🎉🎉🎉")
 }
 
-setupAction();
+// setupAction();

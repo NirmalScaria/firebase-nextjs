@@ -3,7 +3,6 @@ import { google } from 'googleapis';
 
 export async function setupProject(auth) {
     const projects = await getProjects(auth);
-    console.log("Projects : ", projects)
     const selectedProject = await selectProject(projects);
     return selectedProject
 }

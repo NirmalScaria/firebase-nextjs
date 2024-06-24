@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf build",
-    "copy-files": "npm run clean && copyfiles '**/*' build/ -e 'node_modules/**/*' -e 'utilities/**/*'",
+    "copy-files": "npm run clean && copyfiles '**/*' build/ -e 'node_modules/**/*' -e 'utilities/**/*' -e 'firebase-app-config.js' -e 'firebase-service-account.json'",
     "prepare-package": "npm run create-symlink && node utilities/preparePackage.mjs",
     "create-symlink": "node utilities/createSymlink.mjs",
     "delete-symlink": "node utilities/deleteSymlink.mjs",
