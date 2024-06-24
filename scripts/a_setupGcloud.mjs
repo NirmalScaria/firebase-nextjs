@@ -1,86 +1,76 @@
 import { spawn, exec } from 'child_process';
 import inquirer from 'inquirer';
 import path from 'path';
+import { google } from 'googleapis';
+import open from 'open';
+import express from 'express';
+
+const app = express();
 
 // This is used to make sure that gcloud command is working, and that user is logged in.
 export async function setupGcloud() {
-    await verifyGcloud();
-    await gCloudLogin();
+    const authCreds = await googleAuth();
+    const auth = new google.auth.OAuth2();
+    auth.setCredentials(authCreds);
+    return auth;
+    // await verifyGcloud();
+    // await gCloudLogin();
 }
 
 var installing = false;
 
-// This checks if gcloud is installed, and if not, installs it.
-// Returns true if finally successfull, false if failed.
-async function verifyGcloud() {
-    return new Promise((resolve) => {
-        const gcloud = spawn('gcloud', ['--version'], { stdio: 'pipe' });
-        gcloud.on('error', async (error) => {
-            if (!installing) {
-                resolve(await installGCloud());
+function googleAuth() {
+    var server;
+    return new Promise(async (resolve, reject) => {
+        const { authUrl, oauth2Client } = await createAuthClient();
+        open(authUrl)
+        app.get('/', async (req, res) => {
+            const code = req.query.code;
+
+            if (!code) {
+                return res.status(400).send('Authorization code is missing');
+            }
+
+            try {
+                const { tokens } = await oauth2Client.getToken(code);
+                oauth2Client.setCredentials(tokens);
+
+                // Do something with the tokens, e.g., store them or make API requests
+                // return code to close the browser tab
+                res.send('<script>window.location.href="https://cloud.google.com/sdk/auth_success"</script>');
+                server.close()
+                resolve(tokens);
+            } catch (error) {
+                console.error('Error retrieving access token', error);
+                res.status(500).json({ success: false, error: error.message });
             }
         });
-        gcloud.on('close', async (code) => {
-            if (code === 0) {
-                resolve(true)
-            } else {
-                if (!installing) {
-                    resolve(await installGCloud());
-                }
-            }
+
+        server = app.listen(8085, () => {
+            console.log(`Server is running at http://localhost:${8085}`);
         });
     })
 }
+async function createAuthClient() {
+    const clientId = '32555940559.apps.googleusercontent.com';
+    const clientSecret = 'ZmssLNjJy2998hD4CTg2ejr2';
+    const redirectUri = 'http://localhost:8085/';
 
-async function installGCloud() {
-    if (installing) return;
-    installing = true;
-    const { installGcloud } = await inquirer.prompt([
-        {
-            type: 'confirm',
-            name: 'installGcloud',
-            message: 'GCloud CLI not found, which is required for automatic setup. Install it now?'
-        }
-    ]);
+    const oauth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUri);
 
-    if (installGcloud) {
-        // NOTE: Set node_modules/nextfirejs/scripts to the path.
-        const installGcloud = spawn('sh', [path.join(path.join(process.cwd(), "node_modules/nextfirejs/scripts"), 'shellScripts/installGcloud.sh'), '--disable-prompts'], { stdio: 'inherit' });
-        return new Promise((resolve, reject) => {
-            installGcloud.on('error', (error) => {
-                reject(`Error: ${error.message}`);
-            });
-            installGcloud.on('close', (code) => {
-                if (code === 0) {
-                    console.log("gcloud installation successful.")
-                    resolve(true);
-                } else {
-                    reject(`gcloud installation failed with code ${code}`);
-                }
-            });
-        });
-    }
-    else {
-        console.error('ERROR: GCloud is required to continue automatic setup.');
-        return "Denied"
-    }
-}
+    const scopes = [
+        'openid',
+        'https://www.googleapis.com/auth/userinfo.email',
+        'https://www.googleapis.com/auth/cloud-platform',
+        'https://www.googleapis.com/auth/appengine.admin',
+        'https://www.googleapis.com/auth/sqlservice.login',
+        'https://www.googleapis.com/auth/accounts.reauth'
+    ];
 
-async function gCloudLogin() {
-    return new Promise((resolve, reject) => {
-        console.log("🔐 Logging into GCloud. Please authenticate from browser when prompted. 🔐");
-        const firebaseLogin = exec('gcloud auth login');
-
-        firebaseLogin.on('error', (error) => {
-            reject(`Error: ${error.message}`);
-        });
-
-        firebaseLogin.on('close', (code) => {
-            if (code === 0) {
-                resolve('Gcloud login successful!');
-            } else {
-                reject(`Gcloud login failed with code ${code}`);
-            }
-        });
+    const authUrl = oauth2Client.generateAuthUrl({
+        access_type: 'offline',
+        scope: scopes
     });
+
+    return { authUrl, oauth2Client };
 }

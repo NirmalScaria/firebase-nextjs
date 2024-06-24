@@ -1,36 +1,24 @@
-import { spawn } from 'child_process';
 import inquirer from 'inquirer';
+import { google } from 'googleapis';
 
-export async function setupProject() {
-    const projects = await getProjects();
+export async function setupProject(auth) {
+    const projects = await getProjects(auth);
+    console.log("Projects : ", projects)
     const selectedProject = await selectProject(projects);
-    await setProject(selectedProject);
     return selectedProject
 }
 
-async function getProjects() {
-    return new Promise((resolve, reject) => {
-        const gcloudProjects = spawn('gcloud', ['projects', 'list', '--filter', 'labels.firebase:enabled', '--format', 'json'], { stdio: 'pipe' });
-
-        let projects = '';
-
-        gcloudProjects.stdout.on('data', (data) => {
-            projects += data.toString();
-        });
-
-        gcloudProjects.on('error', (error) => {
-            reject(`Error: ${error.message}`);
-        });
-
-        gcloudProjects.on('close', (code) => {
-            projects = JSON.parse(projects);
-            if (code === 0) {
-                resolve(projects);
-            } else {
-                reject(`Gcloud projects failed with code ${code}`);
-            }
-        });
+async function getProjects(auth) {
+    const cloudresourcemanager = google.cloudresourcemanager({
+        version: 'v1',
+        auth
     });
+
+    const projects = await cloudresourcemanager.projects.list({
+        filter: 'labels.firebase:enabled',
+    });
+
+    return projects.data.projects;
 }
 
 async function selectProject(projects) {
@@ -51,22 +39,4 @@ async function selectProject(projects) {
     ]);
 
     return selectedProject.project;
-}
-
-async function setProject(projectId) {
-    return new Promise((resolve, reject) => {
-        const firebaseUse = spawn('gcloud', ['config', 'set', 'project', projectId], { stdio: 'inherit' });
-
-        firebaseUse.on('error', (error) => {
-            reject(`Error: ${error.message}`);
-        });
-
-        firebaseUse.on('close', (code) => {
-            if (code === 0) {
-                resolve('Firebase project set successfully!');
-            } else {
-                reject(`Firebase project set failed with code ${code}`);
-            }
-        });
-    });
 }

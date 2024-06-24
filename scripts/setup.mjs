@@ -20,19 +20,19 @@ async function setupAction() {
     // Step 0 : Copy the files
     showStepsStatus(0)
     console.log("📦 Installing authentication components 📦")
-    await copyComponents();
+    // await copyComponents();
     console.log("👏 Components installed. 👏")
 
     // Step 1 : Install gcloud and login to it.
     showStepsStatus(1)
     console.log("🤖 Setting up GCloud 🤖")
-    await setupGcloud();
+    const auth = await setupGcloud();
     console.log("👏 GCloud setup complete. 👏")
 
     // Step 2 : Set firebase project
     showStepsStatus(2)
     console.log("👀 Checking available firebase projects 👀")
-    const selectedProject = await setupProject();
+    const selectedProject = await setupProject(auth);
     console.log(`🫰🏼 Project Setup Complete: ${selectedProject} 🫰🏼`)
 
     // Step 3 : Generate service account
@@ -56,4 +56,4 @@ async function setupAction() {
     console.log("🎉🎉🎉 Setup Complete 🎉🎉🎉")
 }
 
-// setup();
+setupAction();
