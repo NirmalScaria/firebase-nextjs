@@ -80,7 +80,7 @@ export function EmailSignUpButton({ children, email, password, setErrorMessage, 
     return <div onClick={doCreateUserWithEmailAndPassword} className={className}>{children}</div>
 }
 
-export function ProfileButton({ size = 30 }: { size: number }) {
+export function ProfileButton({ size = 30 }: { size?: number }) {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const { currentUser } = getUserCS();
 

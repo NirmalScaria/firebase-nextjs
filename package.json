@@ -1,17 +1,17 @@
 {
   "name": "nextfirejs",
-  "version": "1.4.64",
+  "version": "1.4.66",
   "description": "Connect Next.js with Firebase Authentication.",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf build",
-    "copy-files": "npm run clean && copyfiles '**/*' build/ -e 'node_modules/**/*'",
+    "copy-files": "npm run clean && copyfiles '**/*' build/ -e 'node_modules/**/*' -e 'utilities/**/*'",
     "prepare-package": "npm run create-symlink && node utilities/preparePackage.mjs",
     "create-symlink": "node utilities/createSymlink.mjs",
     "delete-symlink": "node utilities/deleteSymlink.mjs",
-    "build": "npm run copy-files && npm run prepare-package && cd build && tsc && npm run delete-symlink && cd ..",
-    "autopublish": "npm run build && cd build && npm publish"
+    "build": "npm run copy-files && npm run prepare-package && cd build && tsc && cd .. && npm run delete-symlink",
+    "autopublish": "npm i && npm run build && cd build && npm publish"
   },
   "repository": {
     "type": "git",

@@ -5,6 +5,6 @@
 import fs from 'fs';
 import path from 'path';
 
-fs.unlinkSync(path.join(process.cwd(), 'node_modules'));
+fs.unlinkSync(path.join(process.cwd(), 'build', 'node_modules'));
 
 console.log("Symlink deleted")
