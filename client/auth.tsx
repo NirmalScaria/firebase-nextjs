@@ -42,8 +42,7 @@ export function NextFireJSProvider({ children }: { children: React.ReactNode }) 
       setIsEmailUser(isEmail);
 
       user.getIdToken(true).then(function (idToken) {
-        document.cookie = `nextfirejs_token=${idToken}`;
-        // wait for 1 second
+        document.cookie = `nextfirejs_token=${idToken}; expires=${new Date(Date.now() + 3600 * 1000 * 24 * 14).toUTCString()}; path=/;`;
       }).catch(function (error) {
         console.error("FAILED TO GET ID TOKEN")
       });

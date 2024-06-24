@@ -12,6 +12,16 @@ export function LogoutButton({ children }: { children: React.ReactNode }) {
     return <div onClick={doSignOut}>{children}</div>
 }
 
+export function LoggedInContent({ children }: { children: React.ReactNode }) {
+    const { currentUser } = getUserCS();
+    return currentUser ? <>{children}</> : null;
+}
+
+export function LoggedOutContent({ children }: { children: React.ReactNode }) {
+    const { currentUser } = getUserCS();
+    return currentUser ? null : <>{children}</>;
+}
+
 export function GoogleSignInButton({ children, className }: { children: React.ReactNode, className?: string }) {
     const doSignInWithGoogle = async () => {
         const provider = new GoogleAuthProvider();
