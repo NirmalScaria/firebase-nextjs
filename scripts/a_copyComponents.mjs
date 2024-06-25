@@ -31,14 +31,6 @@ export async function copyComponents() {
         isUsingSrc = true;
     }
 
-    target = path.join(target, 'components');
-    if (!fs.existsSync(target)) fs.mkdirSync(target);
-
-    target = path.join(target, 'nextfirejs');
-    if (!fs.existsSync(target)) fs.mkdirSync(target);
-
-    copyFiles(source, target);
-
     var routerPath = path.join(cwd, '');
     if (fs.existsSync(path.join(routerPath, 'src'))) routerPath = path.join(routerPath, 'src');
 
@@ -47,8 +39,8 @@ export async function copyComponents() {
 
     if (fs.existsSync(appRouterPath)) {
         console.log("App router detected");
-        const nextFireTarget = path.join(appRouterPath, 'nextfirejs');
-        const nextFireSource = path.join(cwd, 'node_modules/nextfirejs/dist/nextfirejs');
+        const nextFireTarget = path.join(appRouterPath, '(authpages)');
+        const nextFireSource = path.join(cwd, 'node_modules/nextfirejs/dist/authpages');
         if (!fs.existsSync(nextFireTarget)) fs.mkdirSync(nextFireTarget);
         copyFiles(nextFireSource, nextFireTarget);
         console.log("Files copied to app router");
