@@ -20,6 +20,18 @@ async function getServiceAccountCreds() {
     }
 }
 
+export async function getAppSS() {
+    var app;
+    if (admin.apps.length === 0) {
+        app = admin.initializeApp({
+            credential: admin.credential.cert(await getServiceAccountCreds())
+        });
+    } else {
+        app = admin.app()
+    }
+    return app
+}
+
 export async function getUserSS() {
     var app;
     if (admin.apps.length === 0) {
