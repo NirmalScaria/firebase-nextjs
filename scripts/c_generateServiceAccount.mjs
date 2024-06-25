@@ -57,5 +57,7 @@ async function storeKey(serviceAccount, selectedProject, auth) {
     const key = resp.data.privateKeyData;
     const keyStr = Buffer.from(key, 'base64').toString('utf-8');
     fs.writeFileSync(SERVICE_ACCOUNT_CREDS_LOCATION, keyStr);
+    // wait a second so that service account is ready and file is written
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     return;
 }

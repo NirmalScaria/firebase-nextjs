@@ -22,7 +22,7 @@ export default async function NextFireJSMiddleware({ req, middleware = undefined
     // Requesting an auth page.
     // These are special routes handled by NextFireJS auth.
     if (AUTH_PATHS.includes(path)) {
-        return NextResponse.rewrite(new URL('/nextfirejs?path=' + path, req.nextUrl));
+        return NextResponse.next()
     }
 
     // If a regex rule is defined in allowRule, allow the path if it matches
