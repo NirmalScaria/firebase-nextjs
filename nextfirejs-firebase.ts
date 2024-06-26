@@ -1,10 +1,16 @@
-import { initializeApp } from "firebase/app";
+import { FirebaseApp, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 //@ts-ignore
 import { firebaseConfig } from "/firebase-app-config";
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app)
+class Firebase {
+    app: FirebaseApp;
+    constructor() {
+        console.log("Inititeedd")
+        const app = initializeApp(firebaseConfig);
+        this.app = app;
+    }
+}
 
-export { app, auth };
+export default Firebase;

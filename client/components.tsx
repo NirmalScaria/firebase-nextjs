@@ -1,12 +1,12 @@
 "use client";
 import "./ProfileButtonStyle.css";
 import { doSignOut } from "../auth-actions";
-import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, User } from "firebase/auth";
-import { auth } from "../nextfirejs-firebase";
+import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, User, getAuth } from "firebase/auth";
 import { getUserCS } from "./auth";
 import { decodeFirebaseError } from "./getFirebaseErrors";
 import React, { useState } from "react";
 import { Popover } from "react-tiny-popover";
+import Firebase from "../nextfirejs-firebase";
 
 export function LogoutButton({ children }: { children: React.ReactNode }) {
     return <div onClick={doSignOut}>{children}</div>
@@ -25,7 +25,7 @@ export function LoggedOutContent({ children }: { children: React.ReactNode }) {
 export function GoogleSignInButton({ children, className }: { children: React.ReactNode, className?: string }) {
     const doSignInWithGoogle = async () => {
         const provider = new GoogleAuthProvider();
-        const resp = await signInWithPopup(auth, provider);
+        const resp = await signInWithPopup(getAuth(new Firebase().app), provider);
         if (resp) {
             setTimeout(() => {
                 window.location.reload();
@@ -46,7 +46,7 @@ export function EmailSignInButton({ children, email, password, setErrorMessage, 
     async function doSignInWithEmailAndPassword() {
         if (setLoading) setLoading(true);
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password)
+            const userCredential = await signInWithEmailAndPassword(getAuth(new Firebase().app), email, password)
             if (userCredential) {
                 setTimeout(() => {
                     window.location.reload();
@@ -74,7 +74,7 @@ export function EmailSignUpButton({ children, email, password, setErrorMessage, 
     async function doCreateUserWithEmailAndPassword() {
         if (setLoading) setLoading(true);
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+            const userCredential = await createUserWithEmailAndPassword(getAuth(new Firebase().app), email, password)
             if (userCredential) {
                 setTimeout(() => {
                     window.location.reload();
