@@ -102,5 +102,7 @@ async function saveCreds(selectedProject, selectedApp) {
         name: `projects/${selectedProject}/webApps/${selectedApp}/config`
     })).data
     config = "export const firebaseConfig = " + JSON.stringify(config, null, 2)
+    config = `import { initializeApp } from "firebase/app";\n\n` + config
+    config = config + `\n\nexport const firebaseApp = initializeApp(firebaseConfig);`
     fs.writeFileSync(WEB_APP_CREDS_LOCATION, config);
 }
