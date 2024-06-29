@@ -6,7 +6,7 @@ import { auth } from "../nextfirejs-firebase";
 import { getUserCS } from "./auth";
 import { decodeFirebaseError } from "./getFirebaseErrors";
 import React, { useState } from "react";
-import { Popover } from "react-tiny-popover";
+import { Popover, PopoverPosition } from "react-tiny-popover";
 
 export function LogoutButton({ children }: { children: React.ReactNode }) {
     return <div onClick={doSignOut}>{children}</div>
@@ -90,13 +90,13 @@ export function EmailSignUpButton({ children, email, password, setErrorMessage, 
     return <div onClick={doCreateUserWithEmailAndPassword} className={className}>{children}</div>
 }
 
-export function ProfileButton({ size = 30 }: { size?: number }) {
+export function ProfileButton({ size = 30, positions = ["bottom", "left", "right", "top"] }: { size?: number, positions?: PopoverPosition[] }) {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const { currentUser } = getUserCS();
 
     if (!currentUser) return <div></div>;
 
-    return <Popover isOpen={isPopoverOpen} positions={["bottom", "left", "right", "top"]} onClickOutside={() => setIsPopoverOpen(false)} content={
+    return <Popover isOpen={isPopoverOpen} positions={positions} onClickOutside={() => setIsPopoverOpen(false)} content={
         <ProfilePopup user={currentUser} />}>
         <div onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
             <ProfileButtonTrigger user={currentUser} size={size} />
