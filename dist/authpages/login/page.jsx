@@ -20,7 +20,7 @@ export default function LoginPage() {
         setErrorMessage("")
     }
 
-    return <div className="ppace-y-6 h-screen w-screen bg-white flex flex-col justify-center items-center transition-all p-2">
+    return <div className="ppace-y-6 h-screen w-screen bg-white text-black flex flex-col justify-center items-center transition-all p-2">
         <div className="max-w-md flex flex-col shadow-lg border rounded-xl w-full bg-gray-100/40">
             <div className="flex flex-col border-b rounded-xl w-full  p-4 md:p-8 lg:p-10 py-10 items-center bg-white">
                 {!currentUser ? <>
