@@ -1,0 +1,1 @@
+export declare const getToken: ({ idToken }: { idToken: string }) => Promise<string>;

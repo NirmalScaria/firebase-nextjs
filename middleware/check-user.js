@@ -2,7 +2,9 @@ import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
 import { firebaseConfig } from "/firebase-app-config";
 
-const google_cert_url = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com";
+const google_cert_urls = [
+    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/publicKeys",
+    "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"]
 export default async function checkUser() {
     const cookieStore = cookies();
     const token = cookieStore.get("nextfirejs_token")?.value;
@@ -30,7 +32,7 @@ export default async function checkUser() {
         console.warn("INVALID AUDIENCE")
         return false;
     }
-    if (body.iss != "https://securetoken.google.com/" + projectId) {
+    if (body.iss != "https://session.firebase.google.com/" + projectId && body.iss != "https://securetoken.google.com/" + projectId) {
         console.warn("INVALID ISSUER")
         return false;
     }
@@ -47,7 +49,10 @@ export default async function checkUser() {
 }
 
 async function getGoogleKeys() {
-    const res = await fetch(google_cert_url);
-    const body = await res.json();
-    return (Object.keys(body));
+    const responses = google_cert_urls.map(async (url) => {
+        const res = await fetch(url);
+        return res.json();
+    });
+    const body = await Promise.all(responses);
+    return (Object.keys(body[0]).concat(Object.keys(body[1])));
 }
