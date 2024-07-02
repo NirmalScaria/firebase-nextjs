@@ -48,7 +48,7 @@ export async function getUserSS() {
     }
     try {
         const user: DecodedIdToken = await getAuth(app)
-            .verifyIdToken(token.value)
+            .verifySessionCookie(token.value, true)
         return user;
     } catch (error) {
         console.error('Error while verifying token', error);
