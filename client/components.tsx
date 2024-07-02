@@ -97,7 +97,7 @@ export function ProfileButton({ size = 30, positions = ["bottom", "left", "right
     if (!currentUser) return <div></div>;
 
     return <Popover isOpen={isPopoverOpen} positions={positions} onClickOutside={() => setIsPopoverOpen(false)} content={
-        <ProfilePopup user={currentUser} />}>
+        <ProfilePopup user={currentUser} />} containerStyle={{zIndex: "999"}}>
         <div onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
             <ProfileButtonTrigger user={currentUser} size={size} />
         </div>
