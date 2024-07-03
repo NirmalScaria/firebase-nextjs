@@ -45,8 +45,11 @@ export function NextFireJSProvider({ children }: { children: React.ReactNode }) 
       user.getIdToken(true).then(async function (idToken) {
         const sessionToken = await getToken({ idToken });
         document.cookie = `nextfirejs_token=${sessionToken}; expires=${new Date(Date.now() + 3600 * 1000 * 24 * 14).toUTCString()}; path=/;`;
-      }).catch(function (error) {
+      }).catch(async function (error) {
         console.error("FAILED TO GET ID TOKEN")
+        document.cookie = "nextfirejs_token=";
+        await auth.signOut();
+        window.location.reload();
       });
 
       setUserLoggedIn(true);
