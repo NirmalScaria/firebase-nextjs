@@ -35,7 +35,6 @@ export function NextFireJSProvider({ children }: { children: React.ReactNode }) 
   async function initializeUser(user: User | null) {
     if (user) {
 
-      setCurrentUser({ ...user });
 
       const isEmail = user.providerData.some(
         (provider) => provider.providerId === "password"
@@ -52,6 +51,7 @@ export function NextFireJSProvider({ children }: { children: React.ReactNode }) 
         // window.location.reload();
       });
 
+      setCurrentUser({ ...user });
       setUserLoggedIn(true);
     } else {
       setCurrentUser(null);
