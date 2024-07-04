@@ -4,6 +4,9 @@
 
 **Effortless Firebase integration for NextJS**
 
+Demo : [https://nextfirejs.scaria.dev](https://nextfirejs.scaria.dev)
+
+
 [Skip to Installation Instructions](#setup-instructions)
 
 # Features
