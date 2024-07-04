@@ -47,13 +47,12 @@ npx nextfirejs setup
 ```
 
 This will
-- Automatically install gcloud if not installed. (You will be prompted to install it.)
-- You will be prompted to login to gcloud.
+- Prompt you to log in with Google.
 - You will be asked to select the firebase project you wish to use.
 - You will be asked to choose the service account you wish to use. ("firebase-admin-sdk" is recommended)
 - Choose an app you wish to use. (Must be a web app) (If an app doesn't exist, you can create it there.)
 - This will generate the necessary authentication credentials, and store it to the project.
-- With this, basic setup is complete. Email password authentication will work, and if you want Google authentication, you will be given a link to add Google as provider, which you can visit and click "Add Provider" -> Google -> Enable.
+- With this, basic setup is complete.
 
 ## 3. Setup NextFireJS Provider
 
