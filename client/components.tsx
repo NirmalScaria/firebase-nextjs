@@ -29,7 +29,7 @@ export function GoogleSignInButton({ children, className }: { children?: React.R
         if (resp) {
             setTimeout(() => {
                 window.location.reload();
-            }, 1000);
+            }, 2500);
         }
     };
 
@@ -57,7 +57,7 @@ export function GithubSignInButton({ children, className }: { children?: React.R
         if (resp) {
             setTimeout(() => {
                 window.location.reload();
-            }, 1000);
+            }, 2500);
         }
     };
 
@@ -93,7 +93,7 @@ export function EmailSignInButton({ children, email, password, setErrorMessage, 
             if (userCredential) {
                 setTimeout(() => {
                     window.location.reload();
-                }, 1000);
+                }, 2500);
             }
             if (setLoading) setLoading(false)
         }
@@ -121,7 +121,7 @@ export function EmailSignUpButton({ children, email, password, setErrorMessage, 
             if (userCredential) {
                 setTimeout(() => {
                     window.location.reload();
-                }, 1000);
+                }, 2500);
             }
             if (setLoading) setLoading(false)
         }
