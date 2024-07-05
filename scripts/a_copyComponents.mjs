@@ -46,12 +46,9 @@ export async function copyComponents() {
         console.log("Files copied to app router");
     }
     else {
-        console.log("Pages router detected");
-        const nextFireTarget = pagesRouterPath
-        const nextFireSource = path.join(cwd, 'node_modules/nextfirejs/dist/pages');
-        if (!fs.existsSync(nextFireTarget)) fs.mkdirSync(nextFireTarget);
-        copyFiles(nextFireSource, nextFireTarget);
-        console.log("Files copied to pages router");
+        console.error("Pages router not supported yet.")
+        console.error("See progress here : https://github.com/NirmalScaria/nextfirejs/issues/3")
+        throw new Error("Pages router not supported yet.");
     }
 
     // COPY THE MIDDLEWARE
