@@ -5,8 +5,8 @@ import { DecodedIdToken, getAuth } from "firebase-admin/auth";
 import fs from 'fs';
 
 async function getServiceAccountCreds() {
-    if (process.env.NEXTFIREJS_SERVICE_ACCOUNT_CREDENTIALS) {
-        return JSON.parse(process.env.NEXTFIREJS_SERVICE_ACCOUNT_CREDENTIALS)
+    if (process.env.FIREBASENEXTJS_SERVICE_ACCOUNT_CREDENTIALS) {
+        return JSON.parse(process.env.FIREBASENEXTJS_SERVICE_ACCOUNT_CREDENTIALS)
     }
     else {
         try {

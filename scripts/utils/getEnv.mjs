@@ -20,5 +20,5 @@ async function getenvAction() {
 async function getServiceAccountCreds() {
     const SERVICE_ACCOUNT_CREDS_LOCATION = path.join(process.cwd(), "firebase-service-account.json");
     const key = JSON.stringify(JSON.parse(fs.readFileSync(SERVICE_ACCOUNT_CREDS_LOCATION, 'utf8')));
-    return `NEXTFIREJS_SERVICE_ACCOUNT_CREDENTIALS='${key}'`
+    return `FIREBASENEXTJS_SERVICE_ACCOUNT_CREDENTIALS='${key}'`
 }
