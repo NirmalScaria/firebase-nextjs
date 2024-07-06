@@ -1,4 +1,4 @@
-import FirebaseNextJSMiddleware from "nextfirejs/middleware/nextfirejs-middleware";
+import FirebaseNextJSMiddleware from "firebase-nextjs/middleware/firebase-nextjs-middleware";
 
 const nextFireJSMiddlewareOptions = {
     allowRule: "^\/_next\/.*"

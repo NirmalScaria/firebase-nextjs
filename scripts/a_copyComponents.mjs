@@ -21,7 +21,7 @@ export async function copyComponents() {
     // COPY THE COMPONENTS
 
     const cwd = process.cwd();
-    var source = path.join(cwd, 'node_modules/nextfirejs/dist/components/nextfirejs');
+    var source = path.join(cwd, 'node_modules/firebase-nextjs/dist/components/firebase-nextjs');
     var target = path.join(cwd, '');
 
     // If @/src exists, copy to @/src/components
@@ -40,19 +40,19 @@ export async function copyComponents() {
     if (fs.existsSync(appRouterPath)) {
         console.log("App router detected");
         const nextFireTarget = path.join(appRouterPath, '(authpages)');
-        const nextFireSource = path.join(cwd, 'node_modules/nextfirejs/dist/authpages');
+        const nextFireSource = path.join(cwd, 'node_modules/firebase-nextjs/dist/authpages');
         if (!fs.existsSync(nextFireTarget)) fs.mkdirSync(nextFireTarget);
         copyFiles(nextFireSource, nextFireTarget);
         console.log("Files copied to app router");
     }
     else {
         console.error("Pages router not supported yet.")
-        console.error("See progress here : https://github.com/NirmalScaria/nextfirejs/issues/3")
+        console.error("See progress here : https://github.com/NirmalScaria/firebase-nextjs/issues/3")
         throw new Error("Pages router not supported yet.");
     }
 
     // COPY THE MIDDLEWARE
-    source = path.join(cwd, 'node_modules/nextfirejs/dist/middleware.js');
+    source = path.join(cwd, 'node_modules/firebase-nextjs/dist/middleware.js');
     if (isUsingSrc) {
         target = path.join(cwd, 'src/middleware.js');
     }

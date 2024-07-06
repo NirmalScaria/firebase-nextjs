@@ -7,7 +7,7 @@ const google_cert_urls = [
     "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"]
 export default async function checkUser() {
     const cookieStore = cookies();
-    const token = cookieStore.get("nextfirejs_token")?.value;
+    const token = cookieStore.get("firebase_nextjs_token")?.value;
     if (!token) {
         return false;
     }

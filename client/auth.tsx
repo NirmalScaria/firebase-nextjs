@@ -43,11 +43,11 @@ export function FirebaseNextJSProvider({ children }: { children: React.ReactNode
 
       user.getIdToken(true).then(async function (idToken) {
         const sessionToken = await getToken({ idToken });
-        document.cookie = `nextfirejs_token=${sessionToken}; expires=${new Date(Date.now() + 3600 * 1000 * 24 * 14).toUTCString()}; path=/;`;
+        document.cookie = `firebase_nextjs_token=${sessionToken}; expires=${new Date(Date.now() + 3600 * 1000 * 24 * 14).toUTCString()}; path=/;`;
       }).catch(async function (error) {
         console.error(error)
         console.error("FAILED TO GET ID TOKEN")
-        // document.cookie = "nextfirejs_token=";
+        // document.cookie = "firebase_nextjs_token=";
         // await auth.signOut();
         // window.location.reload();
       });
@@ -57,7 +57,7 @@ export function FirebaseNextJSProvider({ children }: { children: React.ReactNode
     } else {
       setCurrentUser(null);
       setUserLoggedIn(false);
-      document.cookie = "nextfirejs_token=";
+      document.cookie = "firebase_nextjs_token=";
     }
 
     setLoading(false);

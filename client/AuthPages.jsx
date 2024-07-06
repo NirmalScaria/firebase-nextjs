@@ -1,6 +1,6 @@
-import ForgotPasswordPage from "/components/nextfirejs/ForgotPasswordPage";
-import LoginPage from "/components/nextfirejs/LoginPage";
-import RegisterPage from "/components/nextfirejs/RegisterPage";
+import ForgotPasswordPage from "/components/firebase-nextjs/ForgotPasswordPage";
+import LoginPage from "/components/firebase-nextjs/LoginPage";
+import RegisterPage from "/components/firebase-nextjs/RegisterPage";
 export default async function AuthPages({ searchParams }) {
     const path = searchParams.path;
     if (path == "/login") {

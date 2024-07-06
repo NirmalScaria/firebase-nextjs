@@ -42,7 +42,7 @@ export async function getUserSS() {
         app = admin.app()
     }
     const cookieStore = cookies()
-    const token = cookieStore.get('nextfirejs_token')
+    const token = cookieStore.get('firebase_nextjs_token')
     if (token === undefined) {
         return null
     }
