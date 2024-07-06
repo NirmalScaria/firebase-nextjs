@@ -1,34 +1,11 @@
 
-# NextFireJS
-![nextfirejslogo](https://github.com/NirmalScaria/nextfirejs/assets/46727865/980b3a80-d5a0-48c3-918a-2c0915ec7fbb)
+![firebase-nextjs](https://github.com/NirmalScaria/nextfirejs/assets/46727865/48e2f4e1-318c-4877-97a8-df1c6e21604c)
 
 **Effortless Firebase integration for NextJS**
 
-Demo : [https://nextfirejs.scaria.dev](https://nextfirejs.scaria.dev)
+Demo : [https://firebase-nextjs.scaria.dev](https://firebase-nextjs.scaria.dev)
 
-
-[Skip to Installation Instructions](#setup-instructions)
-
-# Features
-NextFireJS currently offers the following features
-
-## Pre-built customisable authentication pages
-![nextfirejs-customisable-ui](https://github.com/NirmalScaria/nextfirejs/assets/46727865/f62d99c4-9117-4e31-a8b1-e837184aaff4)
-
-## Setup in Under 5 minutes
-![nextfirejs-setup](https://github.com/NirmalScaria/nextfirejs/assets/46727865/926500ae-009e-4bbd-9401-0ca590313518)
-
-## Secure routing. Out of the box and customisable.
-![nextfirejs-secure-routing](https://github.com/NirmalScaria/nextfirejs/assets/46727865/f7414c19-6a87-4519-b8d7-7b492277539a)
-
-## Full support for Client Client & Server Side authentication
-![nextfirejs-client-server](https://github.com/NirmalScaria/nextfirejs/assets/46727865/fcf63b26-7d5e-4996-9303-ffff0ac4db50)
-
-## Pre-built UI components
-![nextfirejs-ui-components](https://github.com/NirmalScaria/nextfirejs/assets/46727865/b3126fd5-dfb4-47c4-b166-537df4812445)
-
-## Type safe and Open source
-![nextfirejs-type-safe](https://github.com/NirmalScaria/nextfirejs/assets/46727865/d0bf72db-4833-4071-bee1-8ff0065fd171)
+![MacBook Air - 8](https://github.com/NirmalScaria/nextfirejs/assets/46727865/2ad45f6e-17f5-41d7-80cd-179aa22dc7c4)
 
 # Setup Instructions
 
@@ -38,12 +15,12 @@ Prerequisite: A firebase project.
 
 ## 1. Install the package
 ```bash
-npm install nextfirejs
+npm install firebase-nextjs
 ```
 
 ## 2. Run the setup script
 ```bash
-npx nextfirejs setup
+npx firebase-nextjs setup
 ```
 
 This will
@@ -54,18 +31,18 @@ This will
 - This will generate the necessary authentication credentials, and store it to the project.
 - With this, basic setup is complete.
 
-## 3. Setup NextFireJS Provider
+## 3. Setup firebase-nextjs Provider
 
-In the root layout file, (layout.jsx), wrap the whole body in **\<NextFireJSProvider\>**
+In the root layout file, (layout.jsx), wrap the whole body in **\<FirebaseNextJSProvider\>**
 
 ```html
-import {NextFireJSProvider} from "nextfirejs/client/auth";
+import {FirebaseNextJSProvider} from "firebase-nextjs/client/auth";
 
 
 <html lang="en">
-    <NextFireJSProvider>
+    <FirebaseNextJSProvider>
         <body className={inter.className}>{children}</body>
-    </NextFireJSProvider>
+    </FirebaseNextJSProvider>
 </html>
 ```
 
@@ -81,14 +58,14 @@ This will require you to sign in to continue. You can use Google Sign In or Emai
 
 ## Changing the UI
 
-**Every authentication page is editable** and is **placed under components/nextfirejs/**. You can edit any of them and make use of the client components to connect with authentication functionalities. (Written below)
+**Every authentication page is editable** and is **placed under **app/(authpages)**. You can edit any of them and make use of the client components to connect with authentication functionalities. (Written below)
 
 ## Client components
 
-There is a set of components that could be imported from "nextfirejs/client/components".
+There is a set of components that could be imported from "firebase-nextjs/client/components".
 1. **LogOutButton:** Takes children (typically a button) and when clicked, the user will be logged out.
 ```javascript
-import {LogOutButton} from "nextfirejs/client/components";
+import {LogOutButton} from "firebase-nextjs/client/components";
 
 export default function MyLogOutButton() {
     return <LogOutButton>
@@ -99,7 +76,7 @@ export default function MyLogOutButton() {
 
 2. **GoogleSignInButton:** Triggers Google Sign In Popup. This could be used for Login as well as Sign Up.
 ```javascript
-import {GoogleSignInButton} from "nextfirejs/client/components";
+import {GoogleSignInButton} from "firebase-nextjs/client/components";
 
 export default function MyLogOutButton() {
     return <GoogleSignInButton>
@@ -110,7 +87,7 @@ export default function MyLogOutButton() {
 
 3. **EmailSignInButton:** Triggers sign in with provided email and password. Takes hooks for showing state in the UI.
 ```javascript
-import {EmailSignInButton} from "nextfirejs/client/components";
+import {EmailSignInButton} from "firebase-nextjs/client/components";
 
 export default function MyLogOutButton() {
 
@@ -143,13 +120,13 @@ export default function MyLogOutButton() {
 ### Routing and authentication
 Authentication can be routed based on few rules and conditions. Everything happens within middleware.js
 
-nextFireJSMiddlewareOptions parameter passed to NextFireJSMiddleware has the following optional properties
+firebaseNextJSMiddlewareOptions parameter passed to FirebaseNextJSMiddleware has the following optional properties
 
 1. **allowRule** : This takes in a regex and allows the matching routes to the public. Every other route will require authentication to use.
 2. **gateMode** : This could either be "allowByDefault" or "denyByDefault".
 3. **privatePaths** : Takes in an array of paths. Applicable only if the gateMode is set to allowByDefault. Every path in this will be public and every other path will need authentication.
 4. **publicPaths** : Takes in an array of paths. Applicable only if the gateMode is set to denyByDefault. Every path in this will require authentication and every other path will be public.
-5. **middleware** : This is a custom middleware that could be passed to NextFireJSMiddleware. Requests which are allowed/permitted by NextFireJSMiddleware will be sent to the provided middleware.
+5. **middleware** : This is a custom middleware that could be passed to FirebaseNextJSMiddleware. Requests which are allowed/permitted by FirebaseNextJSMiddleware will be sent to the provided middleware.
 
 **NOTE: allowRules parameter takes presedence over the other parameters. Meaning, if it is specified, all other parameters will be ignored.**
 **NOTE: Make sure to allow _next/\* for almost all circumstances, as _next is mostly used for public purposes**
@@ -161,7 +138,7 @@ nextFireJSMiddlewareOptions parameter passed to NextFireJSMiddleware has the fol
 On client side, the auth state could be accessed from any page/component using the function getUserCS(); (Stands for "Get User (Client Side)")
 ```javascript
 "use client";
-import { getUserCS } from "nextfirejs/client/auth";
+import { getUserCS } from "firebase-nextjs/client/auth";
 export default function ClientPage() {
     const { currentUser } = getUserCS();
     return <div>
@@ -176,7 +153,7 @@ On server side, the auth state could be accessed from any server side page or an
 
 ```javascript
 "use server";
-import { getUserSS } from "nextfirejs/server/auth";
+import { getUserSS } from "firebase-nextjs/server/auth";
 export default async function ServerPage() {
   const user = await getUserSS();
   return <div>
@@ -193,7 +170,7 @@ The service account keys are stored in the root of project as "firebase-service-
 
 To configure the service account, follow these steps.
 
-1. Run "npx nextfirejs getenv" to get the environment variables. This will print the environment variable to terminal.
+1. Run "npx firebase-nextjs getenv" to get the environment variables. This will print the environment variable to terminal.
 2. Copy the environment variable and set it wherever you plan to deploy. Like vercel or ".env.local" for local testing.
 3. Delete the "firebase-service-account.json" or add "firebase-service-account.json" to .gitignore.
 4. NOTE: There is another file, "firebase-app-config.js" which looks like a set of credentials, but it is totally fine to be pushed and published. [Read more](https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public)
@@ -209,7 +186,7 @@ When you are pushing to production, you will be having a production url differen
 
 ## 1. Install the package
 ```bash
-npm install nextfirejs
+npm install firebase-nextjs
 ```
 
 ## 2. Firebase Service Account
@@ -265,36 +242,21 @@ export const firebaseConfig = {
 ```
 
 ## 6. Add login pages
-Add the login pages to the appropriate locations. It should do the following:
-The route "/nextfirejs" should point lead to this:
+Add the login pages to the appropriate locations. It should handle route of /login, /register, and /forgot-password
 
-```javascript
-import ForgotPasswordPage from "./ForgotPasswordPage";
-import LoginPage from "./LoginPage";
-import RegisterPage from "./RegisterPage";
-export default async function AuthPages({ searchParams }) {
-    const path = searchParams.path;
-    return <main className="w-screen h-screen bg-white text-black">
-        {path == "/login" && <LoginPage />}
-        {path == "/register" && <RegisterPage />}
-        {path == "/forgot-password" && <ForgotPasswordPage />}
-    </main>
-}
-```
-Where the LoginPage, RegisterPage and ForgotPasswordpage should be created as components and places in the project manually.
-You can refer to the source code of this project for sample.
+Please refer to the source code for sample.
 
 ## 7. Last step
 
-In the root layout file, (layout.jsx), wrap the whole body in **\<NextFireJSProvider\>**
+In the root layout file, (layout.jsx), wrap the whole body in **\<FirebaseNextJSProvider\>**
 
 ```html
-import {NextFireJSProvider} from "nextfirejs/client/auth";
+import {FirebaseNextJSProvider} from "firebase-nextjs/client/auth";
 
 <html lang="en">
-    <NextFireJSProvider>
+    <FirebaseNextJSProvider>
         <body className={inter.className}>{children}</body>
-    </NextFireJSProvider>
+    </FirebaseNextJSProvider>
 </html>
 ```
 
