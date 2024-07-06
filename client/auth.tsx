@@ -1,27 +1,27 @@
 "use client";
 import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../nextfirejs-firebase";
+import { auth } from "../firebasenextjs-firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { User } from "firebase/auth";
 import { getToken } from "../server/getToken";
 
-type NextFireJSContextType = {
+type FirebaseNextJSContextType = {
   userLoggedIn: boolean;
   isEmailUser: boolean;
   currentUser: User | null;
 };
 
-const NextFireJSContext = React.createContext<NextFireJSContextType>({
+const FirebaseNextJSContext = React.createContext<FirebaseNextJSContextType>({
   userLoggedIn: false,
   isEmailUser: false,
   currentUser: null,
-} as NextFireJSContextType);
+} as FirebaseNextJSContextType);
 
 export function getUserCS() {
-  return useContext(NextFireJSContext);
+  return useContext(FirebaseNextJSContext);
 }
 
-export function NextFireJSProvider({ children }: { children: React.ReactNode }) {
+export function FirebaseNextJSProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [isEmailUser, setIsEmailUser] = useState(false);
@@ -70,8 +70,8 @@ export function NextFireJSProvider({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <NextFireJSContext.Provider value={value}>
+    <FirebaseNextJSContext.Provider value={value}>
       {loading ? <body /> : children}
-    </NextFireJSContext.Provider>
+    </FirebaseNextJSContext.Provider>
   );
 }

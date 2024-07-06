@@ -17,7 +17,7 @@ const clearLines = (lines) => {
 
 export function showStepsStatus(currentStep) {
     clearLines(steps.length + 100)
-    console.log("🤞🏻 NextFireJS Setup Steps. 🤞🏻")
+    console.log("🤞🏻 FirebaseNextJS Setup Steps. 🤞🏻")
     steps.forEach((step, index) => {
         if (index < currentStep) {
             console.log(chalk.green("✓ " + step));

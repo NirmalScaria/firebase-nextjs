@@ -7,7 +7,7 @@ const AUTH_PATHS = [
     "/forgot-password"
 ]
 
-export default async function NextFireJSMiddleware({ req, middleware = undefined, nextFireJSMiddlewareOptions = {} }) {
+export default async function FirebaseNextJSMiddleware({ req, middleware = undefined, nextFireJSMiddlewareOptions = {} }) {
     const path = req.nextUrl.pathname;
     const loggedIn = await checkUser();
     middleware = middleware ?? ((req) => { return NextResponse.next() });
@@ -20,7 +20,7 @@ export default async function NextFireJSMiddleware({ req, middleware = undefined
     }
 
     // Requesting an auth page.
-    // These are special routes handled by NextFireJS auth.
+    // These are special routes handled by FirebaseNextJS auth.
     if (AUTH_PATHS.includes(path)) {
         return NextResponse.next()
     }

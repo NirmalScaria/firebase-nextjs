@@ -10,11 +10,11 @@ import { showStepsStatus } from "./cliUtils.mjs";
 import { Command } from "commander";
 
 export const setup = new Command("setup")
-    .description("Setup NextFireJS")
+    .description("Setup FirebaseNextJS")
     .action(setupAction);
 
 async function setupAction() {
-    console.log("🤞🏻 Starting NextFireJS Setup. 🤞🏻")
+    console.log("🤞🏻 Starting FirebaseNextJS Setup. 🤞🏻")
 
     // Step 0 : Copy the files
     showStepsStatus(0)

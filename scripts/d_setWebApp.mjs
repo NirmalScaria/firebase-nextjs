@@ -73,7 +73,7 @@ async function createWebApp(apps, selectedProject) {
             type: 'input',
             name: 'displayName',
             message: 'Enter the display name for the new app : ',
-            default: "My NextFireJS App"
+            default: "My FirebaseNextJS App"
         },
     ])
     const resp = await firebase.projects.webApps.create({

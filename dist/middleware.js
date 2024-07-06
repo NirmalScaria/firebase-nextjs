@@ -1,9 +1,9 @@
-import NextFireJSMiddleware from "nextfirejs/middleware/nextfirejs-middleware";
+import FirebaseNextJSMiddleware from "nextfirejs/middleware/nextfirejs-middleware";
 
 const nextFireJSMiddlewareOptions = {
     allowRule: "^\/_next\/.*"
 }
 
 export default function middleware(req) {
-    return NextFireJSMiddleware({ req, nextFireJSMiddlewareOptions });
+    return FirebaseNextJSMiddleware({ req, nextFireJSMiddlewareOptions });
 }

@@ -1,4 +1,4 @@
-import { auth } from "./nextfirejs-firebase";
+import { auth } from "./firebasenextjs-firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
