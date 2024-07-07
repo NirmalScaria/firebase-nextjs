@@ -57,7 +57,7 @@ export function FirebaseNextJSProvider({ children }: { children: React.ReactNode
     } else {
       setCurrentUser(null);
       setUserLoggedIn(false);
-      document.cookie = "firebase_nextjs_token=";
+      document.cookie = "firebase_nextjs_token=; path=/;";
     }
 
     setLoading(false);
