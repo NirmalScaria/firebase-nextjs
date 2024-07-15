@@ -11,8 +11,16 @@ export default async function checkUser() {
     if (!token) {
         return false;
     }
-    var headers = jwtDecode(token, { header: true });
-    var body = jwtDecode(token);
+    var headers;
+    var body
+    try {
+        headers = jwtDecode(token, { header: true });
+        body = jwtDecode(token);
+    }
+    catch (e) {
+        console.warn("INVALID JSON")
+        return false;
+    }
     const keys = await getGoogleKeys()
     if (!(keys.includes(headers.kid))) {
         console.warn("INVALID JSON : KID NOT MATCH")
