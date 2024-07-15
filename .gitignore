@@ -3,3 +3,4 @@ firebase-service-account.json
 firebase-app-config.js
 build
 .DS_Store
+scripts/oauthDetails.mjs

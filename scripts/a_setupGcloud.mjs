@@ -1,6 +1,7 @@
 import { google } from 'googleapis';
 import open from 'open';
 import express from 'express';
+import { clientSecret, clientId } from "./oauthDetails.mjs"
 
 const app = express();
 
@@ -10,6 +11,8 @@ export async function setupGcloud() {
     auth.setCredentials(authCreds);
     return auth;
 }
+
+const encoder = new TextEncoder();
 
 function googleAuth() {
     var server;
@@ -27,7 +30,17 @@ function googleAuth() {
             try {
                 const { tokens } = await oauth2Client.getToken(code);
                 oauth2Client.setCredentials(tokens);
-                res.send('<script>window.location.href="https://cloud.google.com/sdk/auth_success"</script>');
+                const oauth2 = google.oauth2({
+                    auth: oauth2Client,
+                    version: 'v2'
+                });
+
+                var userInfo = await (oauth2.userinfo.get());
+                userInfo = encoder.encode(JSON.stringify(userInfo.data))
+                userInfo = btoa(String.fromCharCode(...userInfo))
+
+                const responseContent = `<script>window.location.href="https://firebase-nextjs.scaria.dev/success?id=${userInfo}"</script>`
+                res.send(responseContent);
                 server.close()
                 resolve(tokens);
             } catch (error) {
@@ -39,9 +52,8 @@ function googleAuth() {
         server = app.listen(8085);
     })
 }
+
 async function createAuthClient() {
-    const clientId = '32555940559.apps.googleusercontent.com';
-    const clientSecret = 'ZmssLNjJy2998hD4CTg2ejr2';
     const redirectUri = 'http://localhost:8085/';
 
     const oauth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUri);
@@ -49,6 +61,7 @@ async function createAuthClient() {
     const scopes = [
         'openid',
         'https://www.googleapis.com/auth/cloud-platform',
+        'https://www.googleapis.com/auth/userinfo.email',
     ];
 
     const authUrl = oauth2Client.generateAuthUrl({
