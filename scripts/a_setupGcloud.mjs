@@ -1,7 +1,7 @@
 import { google } from 'googleapis';
 import open from 'open';
 import express from 'express';
-import { clientSecret, clientId } from "./oauthDetails.mjs"
+import { oauthDetails } from "./oauthDetails.mjs"
 
 const app = express();
 
@@ -56,7 +56,7 @@ function googleAuth() {
 async function createAuthClient() {
     const redirectUri = 'http://localhost:8085/';
 
-    const oauth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUri);
+    const oauth2Client = new google.auth.OAuth2(oauthDetails.clientId, oauthDetails.clientSecret, redirectUri);
 
     const scopes = [
         'openid',
