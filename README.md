@@ -54,214 +54,106 @@ npm run dev
 
 This will require you to sign in to continue. You can use Google Sign In or Email Password Sign In.
 
+# Access the auth state
+
+You can access the authentication state, and the user object on client side as well as server side easily. Learn more:
+https://firebase-nextjs.scaria.dev/auth
+
 # Customisation
 
-## Changing the UI
+firebase-nextjs offers complete customisation of login pages. To learn more, visit:
+https://firebase-nextjs.scaria.dev/custom_login
 
-**Every authentication page is editable** and is **placed under **app/(authpages)**. You can edit any of them and make use of the client components to connect with authentication functionalities. (Written below)
+# Components
 
-## Client components
+firebase-nextjs comes with many pre built components to help with user authentication and user management. Learn more from:
+https://firebase-nextjs.scaria.dev/components
 
-There is a set of components that could be imported from "firebase-nextjs/client/components".
-1. **LogOutButton:** Takes children (typically a button) and when clicked, the user will be logged out.
-```javascript
-import {LogOutButton} from "firebase-nextjs/client/components";
+# Routing
 
-export default function MyLogOutButton() {
-    return <LogOutButton>
-        <button className = "bg-red-800 text-white">Log Out</button>
-    </LogOutButton>
-}
+You can customise the rules for routing, and define which pages are public and which pages are for logged in users. Learn more at:
+https://firebase-nextjs.scaria.dev/routing
+
+# Moving to production
+
+Before deploying the app to production, there are few configurations and security measures to be done. Read more at:
+https://firebase-nextjs.scaria.dev/production
+
+# For Developers
+
+If you wish to contribute or make changes to the package, follow the below guide
+
+## Step 1: Fork and clone the repo
+
+Fork the repo to your profile and clone the repo locally.
+
+## Step 2: Build the package
+
+Run the command
+
+```
+npm run build
 ```
 
-2. **GoogleSignInButton:** Triggers Google Sign In Popup. This could be used for Login as well as Sign Up.
-```javascript
-import {GoogleSignInButton} from "firebase-nextjs/client/components";
+This will create a folder 'build' in the directory. It will contain the actual package that you should be using.
 
-export default function MyLogOutButton() {
-    return <GoogleSignInButton>
-        <button className = "bg-red-800 text-white">Sign in with Google</button>
-    </GoogleSignInButton>
-}
+## Step 3: Link the package to your project
+
+Create a nextjs project that you wish to test the package with. (Or use your existing NextJS project). Copy the location of the build directory generated from the previous step.
+
+Run the command
+```
+npx link /path/to/build/folder/of/firebase-nextjs
 ```
 
-3. **EmailSignInButton:** Triggers sign in with provided email and password. Takes hooks for showing state in the UI.
-```javascript
-import {EmailSignInButton} from "firebase-nextjs/client/components";
+## Step 4: Use the package
 
-export default function MyLogOutButton() {
+Now, the package is linked to your project, and it is exactly as if you have installed the package. **Do not add the package name to package.json.**
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+To use the package in your project,
+You can import the files just like you would form an installed package.
 
-    function handleChange(e) {
-        if (e.target.type === "email") setEmail(e.target.value);
-        if (e.target.type === "password") setPassword(e.target.value);
-        setErrorMessage("")
-    }
-
-    // Add text buttons with email and password. Set a handlechange function to set the values.
-
-    return <div className="flex flex-col">
-                <input type="email" onChange={handleChange}/>
-                <input type="password" onChange={handleChange}/>
-                <EmailSignInButton email={email} password={password} setErrorMessage={setErrorMessage} setLoading={setLoading}>
-                    <button disabled={loading}>
-                        Sign In
-                    </button>
-                </EmailSignInButton>
-                <span className="text-red-600 text-sm">
-                    {errorMessage}
-                </span>
-    </div>
-}
+Example:
 ```
-### Routing and authentication
-Authentication can be routed based on few rules and conditions. Everything happens within middleware.js
-
-firebaseNextJSMiddlewareOptions parameter passed to FirebaseNextJSMiddleware has the following optional properties
-
-1. **allowRule** : This takes in a regex and allows the matching routes to the public. Every other route will require authentication to use.
-2. **gateMode** : This could either be "allowByDefault" or "denyByDefault".
-3. **privatePaths** : Takes in an array of paths. Applicable only if the gateMode is set to allowByDefault. Every path in this will be public and every other path will need authentication.
-4. **publicPaths** : Takes in an array of paths. Applicable only if the gateMode is set to denyByDefault. Every path in this will require authentication and every other path will be public.
-5. **middleware** : This is a custom middleware that could be passed to FirebaseNextJSMiddleware. Requests which are allowed/permitted by FirebaseNextJSMiddleware will be sent to the provided middleware.
-
-**NOTE: allowRules parameter takes presedence over the other parameters. Meaning, if it is specified, all other parameters will be ignored.**
-**NOTE: Make sure to allow _next/\* for almost all circumstances, as _next is mostly used for public purposes**
-
-# Accessing the auth state
-
-## Client side
-
-On client side, the auth state could be accessed from any page/component using the function getUserCS(); (Stands for "Get User (Client Side)")
-```javascript
-"use client";
-import { getUserCS } from "firebase-nextjs/client/auth";
-export default function ClientPage() {
-    const { currentUser } = getUserCS();
-    return <div>
-      {JSON.stringify(currentUser?.email}
-    </div>
-}
+import { ProfileButton } from "firebase-nextjs/client/components";
 ```
 
-## Server side
-
-On server side, the auth state could be accessed from any server side page or any API or function call! Yes! Out of the box. Just use the function getUserSS();. (Stands for "Get User (Server Side)"
-
-```javascript
-"use server";
-import { getUserSS } from "firebase-nextjs/server/auth";
-export default async function ServerPage() {
-  const user = await getUserSS();
-  return <div>
-    {JSON.stringify(user?.email}
-  </div>
-}
+To use the npx script
+You can run the npx script as usual, and the code in your build folder will be used.
+```
+npx firebase-nextjs getenev
 ```
 
-# Production setup
+## Step 5: Modifications
 
-There are few steps to be taken care of before publishing to production
-## 1. Service Account Keys
-The service account keys are stored in the root of project as "firebase-service-account.json". However, this is highly sensitive and should not be pushed to version control.
-
-To configure the service account, follow these steps.
-
-1. Run "npx firebase-nextjs getenv" to get the environment variables. This will print the environment variable to terminal.
-2. Copy the environment variable and set it wherever you plan to deploy. Like vercel or ".env.local" for local testing.
-3. Delete the "firebase-service-account.json" or add "firebase-service-account.json" to .gitignore.
-4. NOTE: There is another file, "firebase-app-config.js" which looks like a set of credentials, but it is totally fine to be pushed and published. [Read more](https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public)
-
-## 2. Add domain to firebase.
-When you are pushing to production, you will be having a production url different from localhost or the firebase url. This production url should be added to authorized domains in firebase authentication.
-
-1. Go to firebase console.
-2. Go to authentication -> settings -> authorized domains
-3. Add the domain you plan to publish the website to.
-
-# Manual Installation 
-
-## 1. Install the package
-```bash
-npm install firebase-nextjs
+After you make any modification to the source code, run 
 ```
-
-## 2. Firebase Service Account
-
-Generate a Firebase Serivce Account Private Key and download it as JSON. You can get it from https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk
-
-Rename it to 
+npm run build
 ```
-"firebase-service-account.json"
-```
-and store it to the root of your NextJS project. (Along with package.json)
+Thats it and your project will be using the newly built package.
 
-## 3. Enable authentication methods
+## NOTE: Installing other packages
 
-Go to Firebase Authentication (https://console.firebase.google.com/u/0/project/_/authentication) and enable it. Also enable the providers you would like to use. (Google sign in and Email Password sign in are recommended)
+Whenever you use the command `npm install packagename` to install any package, the npx link will be removed.
+Re run the npx command to link to the build directory again.
 
-## 4. Firebase Web App
+## Contributing
 
-Register a Web App app from firebase console. Read more at https://firebase.google.com/docs/web/setup#register-app if you need guidance. 
+If you have done any modification that might be useful to others, you are welcome to create a pull request and become a contributor.
 
-Once completed, you can scroll down to see a section of code which looks like this:
-```javascript
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "...",
-  authDomain: "...",
-  projectId: "...",
-  storageBucket: "...",
-  messagingSenderId: "...",
-  appId: "..."
-};
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-```
 
-Copy the content and store it to root of your NextJS project as "firebase-app-config.js". (Along with package.json)
 
-## 5. IMPORTANT: Add export keyword
 
-In the above file added, insert an "export" keyword just before **const firebaseConfig = {...**
-```javascript
-export const firebaseConfig = {
-    apiKey: "...",
-    authDomain: "..."
-    ...
-}
-```
 
-## 6. Add login pages
-Add the login pages to the appropriate locations. It should handle route of /login, /register, and /forgot-password
 
-Please refer to the source code for sample.
 
-## 7. Last step
 
-In the root layout file, (layout.jsx), wrap the whole body in **\<FirebaseNextJSProvider\>**
 
-```html
-import {FirebaseNextJSProvider} from "firebase-nextjs/client/auth";
 
-<html lang="en">
-    <FirebaseNextJSProvider>
-        <body className={inter.className}>{children}</body>
-    </FirebaseNextJSProvider>
-</html>
-```
 
-## Thats it!
 
-Now try running the code and you will have to authenticate before you can access the website.
 
-    
+
+
