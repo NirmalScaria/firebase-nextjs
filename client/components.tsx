@@ -8,8 +8,17 @@ import { decodeFirebaseError } from "./getFirebaseErrors";
 import React, { useState } from "react";
 import { Popover, PopoverPosition } from "react-tiny-popover";
 
-export function LogoutButton({ children }: { children: React.ReactNode }) {
-    return <div onClick={doSignOut}>{children}</div>
+/**
+ * 
+ * @param children - The component that should trigger the sign out.
+ * @param persistRoute [Optional] - If true, the the user will be redirected to the same page after logging back in. Default is false.
+ * @returns 
+ */
+export function LogoutButton({ children, persistRoute }: { children: React.ReactNode, persistRoute?: boolean }) {
+    function signOutAction() {
+        doSignOut({ persist: persistRoute ?? false })
+    }
+    return <div onClick={signOutAction}>{children}</div>
 }
 
 export function LoggedInContent({ children }: { children: React.ReactNode }) {
