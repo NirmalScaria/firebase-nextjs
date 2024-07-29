@@ -5,7 +5,8 @@
 
 Demo : [https://firebase-nextjs.scaria.dev](https://firebase-nextjs.scaria.dev)
 
-![MacBook Air - 8](https://github.com/NirmalScaria/nextfirejs/assets/46727865/2ad45f6e-17f5-41d7-80cd-179aa22dc7c4)
+<video src="https://github.com/user-attachments/assets/12f4429e-6b1d-4869-914a-d3513c681bed" height="800px"> </video>
+
 
 # Setup Instructions
 
