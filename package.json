@@ -1,6 +1,6 @@
 {
   "name": "firebase-nextjs",
-  "version": "1.6.9",
+  "version": "1.7.0",
   "description": "Connect Next.js with Firebase Authentication.",
   "private": true,
   "scripts": {
@@ -30,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/NirmalScaria/firebase-nextjs/issues"
   },
-  "homepage": "https://github.com/NirmalScaria/firebase-nextjs#readme",
+  "homepage": "https://firebase-nextjs.scaria.dev",
   "dependencies": {
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
