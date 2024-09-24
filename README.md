@@ -122,7 +122,7 @@ import { ProfileButton } from "firebase-nextjs/client/components";
 To use the npx script
 You can run the npx script as usual, and the code in your build folder will be used.
 ```
-npx firebase-nextjs getenev
+npx firebase-nextjs getenv
 ```
 
 ## Step 5: Modifications
